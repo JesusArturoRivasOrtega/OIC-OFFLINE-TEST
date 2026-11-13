@@ -3,7 +3,7 @@ import vm from 'node:vm';
 
 const context={window:{}};
 vm.createContext(context);
-for(const file of ['rationales.js','authored-questions.js','data.js','curriculum.js','curriculum-depth.js','curriculum-workbook.js']){
+for(const file of ['rationales.js','authored-questions.js','question-translations.js','question-references.js','data.js','curriculum.js','curriculum-depth.js','curriculum-workbook.js']){
   vm.runInContext(readFileSync(new URL(`../${file}`,import.meta.url),'utf8'),context);
 }
 const {questions}=context.window.OIC_DATA;
@@ -21,6 +21,7 @@ for(const q of questions){
   if(q.verification!=='verified')issues.push(`${q.id}: answer not editorially verified`);
   if(q.options.some(x=>!x.why))issues.push(`${q.id}: option rationale missing`);
   if(q.options.some(x=>!x.textEs||!x.whyEs))issues.push(`${q.id}: Spanish options or rationales missing`);
+  if(q.source==='Generated practice'&&q.translationStatus!=='reviewed')issues.push(`${q.id}: Spanish translation has not been proofread`);
 }
 const stems=questions.map(q=>q.question.trim().toLowerCase());
 if(new Set(stems).size!==stems.length)issues.push('duplicate question stems');

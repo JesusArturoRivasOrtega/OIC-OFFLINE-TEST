@@ -1,6 +1,8 @@
 /* Public, original practice content. It intentionally does not include the user's PDFs. */
 window.OIC_DATA = (() => {
-  const reference = (section) => ({title:'Oracle Cloud Using Integrations in Oracle Integration 3', edition:'G36915-54, October 2026', section, status:'section pointer; item-level review pending'});
+  const reference = (section,topic) => topic&&window.OIC_QUESTION_REFERENCES?.[topic]
+    ? {...window.OIC_QUESTION_REFERENCES[topic],section}
+    : {title:'Oracle Cloud Using Integrations in Oracle Integration 3', edition:'G36915-54, October 2026', section, status:'section pointer; item-level review pending'};
   const categories = [
     {id:'started',short:'Getting started',name:'Getting Started with OIC Integrations',weight:14,color:'#2563eb',summary:'Foundations, projects, integration styles, lifecycle, triggers and invokes.'},
     {id:'connections',short:'Connections',name:'Using OIC Connections and Adapters',weight:20,color:'#0f766e',summary:'Adapters, hybrid access, transport security, OAuth 2.0 and connection testing.'},
@@ -48,7 +50,7 @@ window.OIC_DATA = (() => {
       ['Re-throw Fault','Use Re-throw Fault when a caught fault should be propagated after local handling or enrichment.',['It silently marks a fault successful.','It maps every business field.','It waits for a schedule.'],'Create Application Integrations: Catch Faults with a Re-throw Fault Action']
     ],
     scheduled:[
-      ['Schedule Integration','A Schedule Integration runs on a configured schedule rather than being initiated by an external trigger.',['It must have a REST Trigger.','It cannot invoke any Connection.','It has no run history.'],'Create Schedule Integrations: Create a Schedule Integration'],
+      ['Schedule Integration','A Schedule Integration starts from its configured schedule or an ad hoc run, not from an external Trigger connection.',['It must have a REST Trigger.','It cannot invoke any Connection.','It has no run history.'],'Create Schedule Integrations: Create a Schedule Integration'],
       ['Schedule timing','Define schedule timing deliberately, including recurrence and applicable time-zone behavior, then verify the planned execution window.',['Assume every schedule runs in the user browser time zone.','Use a schedule only after a fault occurs.','Never monitor a schedule run.'],'Create Schedule Integrations: Define the Integration Schedule'],
       ['Schedule parameters','Schedule parameters make a scheduled run configurable without redesigning its entire orchestration.',['They are a substitute for Connection security.','They expose secrets in a public URL.','They cannot be updated.'],'Create Schedule Integrations: Create and Update Parameters'],
       ['Manual run','A manual execution can be used to initiate a configured scheduled integration when the operational use case permits it.',['It permanently converts it to an Application Integration.','It bypasses all mappings.','It disables monitoring.'],'Create Schedule Integrations: Run Scheduled Integrations'],
@@ -63,7 +65,7 @@ window.OIC_DATA = (() => {
       ['Activity and observability','Use Oracle Integration monitoring and observability views to investigate runtime behavior and operational data.',['Use Map Editor to replace monitoring.','Disable tracking for faster diagnosis.','Rely only on a client screenshot.'],'Get Started with Observability'],
       ['Business tracking','Business Identifiers help operators find messages using meaningful business fields such as an order number.',['They replace service credentials.','They automatically correct mapping faults.','They are only design-time comments.'],'Integration Concepts: Business Identifiers'],
       ['HTTP 401','An HTTP 401 response typically indicates that authentication is required or failed; verify credentials or token configuration.',['It always means the resource does not exist.','It proves authorization was granted.','It is a successful asynchronous response.'],'Troubleshooting REST connections and HTTP status behavior'],
-      ['HTTP 403','An HTTP 403 response indicates the caller is understood but not permitted to access the requested resource.',['It is always a DNS failure.','It indicates a syntax error in a JSON payload.','It guarantees an expired certificate.'],'Troubleshooting REST connections and HTTP status behavior'],
+      ['HTTP 403','An HTTP 403 response indicates that the server understood the request but refuses to fulfill it; check the caller\'s permissions.',['It is always a DNS failure.','It indicates a syntax error in a JSON payload.','It guarantees an expired certificate.'],'Troubleshooting REST connections and HTTP status behavior'],
       ['HTTP 429','An HTTP 429 response indicates rate limiting; apply the endpoint provider guidance and a controlled retry/backoff strategy where appropriate.',['Immediately send unlimited retries in parallel.','Treat it as a successful payload.','Replace it with Basic Authentication.'],'Troubleshooting REST connections and HTTP status behavior'],
       ['HTTP 503','An HTTP 503 response commonly signals temporary service unavailability; assess transient retry behavior, idempotency, and escalation.',['It always means an invalid WSDL.','It can be fixed by changing a Tracking Variable only.','It proves the target processed the request.'],'Troubleshooting REST connections and fault management'],
       ['Payload logging','Use payload logging thoughtfully, balancing diagnostic value with sensitive-data and retention considerations.',['Log all credentials to simplify support.','Payload logging removes the need for tests.','It changes a trigger into an invoke.'],'Observability strategy and security guidance'],
@@ -125,11 +127,17 @@ window.OIC_DATA = (() => {
         const selectedForm=variant<4?forms[variant]:finalForm;
         const q=extra?`Which statements about ${topic} are accurate? Select all that apply.`:selectedForm.en(topic);
         const es=extra?`¿Qué afirmaciones sobre ${topicTranslations[topic]||topic} son correctas? Selecciona todas las que correspondan.`:selectedForm.es(topic);
-        const choices=[answer,...distractors,...(extra?[extra]:[])].map((text,index)=>({text,correct:index===0||!!extra&&index===4,why:index===0||!!extra&&index===4?window.OIC_CORRECT_WHY?.[topic]||`This is the supported rule for ${topic}: ${text}`:window.OIC_RATIONALES?.[topic]?.[index-1]||`This conflicts with the supported rule: ${answer}`}));
+        const translation=window.OIC_QUESTION_TRANSLATIONS?.[topic];
+        const choices=[answer,...distractors,...(extra?[extra]:[])].map((text,index)=>({
+          text,textEs:index===4?translation?.extraEs:translation?.optionsEs?.[index],
+          correct:index===0||!!extra&&index===4,
+          why:index===0||!!extra&&index===4?window.OIC_CORRECT_WHY?.[topic]||`This is the supported rule for ${topic}: ${text}`:window.OIC_RATIONALES?.[topic]?.[index-1]||`This conflicts with the supported rule: ${answer}`,
+          whyEs:index===4?translation?.whyEs?.[0]:translation?.whyEs?.[index]
+        }));
         const offset=(factIndex+variant)%choices.length;
         const options=choices.map((_,index)=>choices[(index+offset)%choices.length]).map((choice,index)=>({...choice,id:String.fromCharCode(65+index)}));
         const correct=options.filter(option=>option.correct).map(option=>option.id);
-        return {id:`gen-${category.id}-${String(factIndex+1).padStart(2,'0')}-${String(variant+1).padStart(2,'0')}`,categoryId:category.id,topic,question:q,questionEs:es,options,correct,multi:!!extra,difficulty:form.kind==='fundamentals'?'basic':form.kind==='expert'?'expert':'professional',type:form.kind,source:'Generated practice',sourceType:'original',verification:'provisional',reference:reference(section),explanation:`${answer}${extra?' '+extra:''} This original practice item is based on ${section}.`,createdFor:'OIC Certification Academy 2026'};
+        return {id:`gen-${category.id}-${String(factIndex+1).padStart(2,'0')}-${String(variant+1).padStart(2,'0')}`,categoryId:category.id,topic,question:q,questionEs:es,options,correct,multi:!!extra,difficulty:form.kind==='fundamentals'?'basic':form.kind==='expert'?'expert':'professional',type:form.kind,source:'Generated practice',sourceType:'original',verification:'provisional',translationStatus:translation?.translationStatus||'missing',reference:reference(section,topic),explanation:`${answer}${extra?' '+extra:''} This original practice item is based on ${section}.`,createdFor:'OIC Certification Academy 2026'};
       });
     }));
   }

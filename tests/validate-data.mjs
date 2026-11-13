@@ -4,6 +4,8 @@ const context={window:{}};
 vm.createContext(context);
 vm.runInContext(readFileSync(new URL('../rationales.js', import.meta.url),'utf8'),context);
 vm.runInContext(readFileSync(new URL('../authored-questions.js', import.meta.url),'utf8'),context);
+vm.runInContext(readFileSync(new URL('../question-translations.js', import.meta.url),'utf8'),context);
+vm.runInContext(readFileSync(new URL('../question-references.js', import.meta.url),'utf8'),context);
 vm.runInContext(readFileSync(new URL('../data.js', import.meta.url),'utf8'),context);
 vm.runInContext(readFileSync(new URL('../curriculum.js', import.meta.url),'utf8'),context);
 vm.runInContext(readFileSync(new URL('../curriculum-depth.js', import.meta.url),'utf8'),context);
@@ -20,6 +22,8 @@ if(categories.length!==6)throw new Error(`Expected six categories, got ${categor
 const weights=categories.reduce((n,c)=>n+c.weight,0);if(weights!==100)throw new Error(`Weights must total 100, got ${weights}`);
 for(const c of categories){const bank=questions.filter(q=>q.categoryId===c.id);if(bank.length!==50)throw new Error(`${c.id} requires 50 questions, got ${bank.length}`);if(new Set(bank.map(q=>q.id)).size!==50)throw new Error(`${c.id} has duplicate IDs`);const kinds=Object.fromEntries(['fundamentals','application','scenario','expert'].map(k=>[k,bank.filter(q=>q.type===k).length]));const expected={fundamentals:10,application:15,scenario:15,expert:10};for(const [k,n] of Object.entries(expected))if(kinds[k]!==n)throw new Error(`${c.id} ${k}: expected ${n}, got ${kinds[k]}`);for(const q of bank){if(q.sourceType!=='original'||!['Generated practice','Original editorial practice'].includes(q.source))throw new Error(`${q.id} must be public original practice`);if(!q.reference?.section||!q.correct?.length||q.options.length<4)throw new Error(`${q.id} lacks required metadata`);if(q.options.some(o=>!o.why||o.why.length<25))throw new Error(`${q.id} lacks an option-specific rationale`)}}
 for(const q of questions)if(q.options.some(option=>option.correct!==q.correct.includes(option.id)))throw new Error(`${q.id} answer key and option flags disagree`);
+for(const q of questions)if(q.options.some(option=>!option.textEs||!option.whyEs))throw new Error(`${q.id} is missing a Spanish option or rationale`);
+for(const q of questions.filter(q=>q.source==='Generated practice'))if(!q.reference.url||q.reference.status==='item-level verified')throw new Error(`${q.id} reference status is inconsistent`);
 const generated=questions.filter(q=>q.source==='Generated practice'),keyCounts=Object.fromEntries(['A','B','C','D','E'].map(id=>[id,generated.filter(q=>q.correct.includes(id)).length]));
 if(keyCounts.A<35||keyCounts.B<35||keyCounts.C<35||keyCounts.D<35||keyCounts.A>100)throw new Error(`Generated answer positions remain biased: ${JSON.stringify(keyCounts)}`);
 const authored=questions.filter(q=>q.source==='Original editorial practice');

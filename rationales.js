@@ -332,7 +332,7 @@ window.OIC_CORRECT_WHY = {
   'Scope fault handler':'A Scope defines where its local handler can intercept faults from grouped actions.',
   'Stage File':'File-backed operations can bound memory consumption during suitable segmented processing.',
   'Re-throw Fault':'Propagation preserves the failed status after a local handler has added context or performed cleanup.',
-  'Schedule Integration':'A configured recurrence supplies the initiating event for time-based work.',
+  'Schedule Integration':'A configured recurrence or an authorized ad hoc run starts scheduled work without an external Trigger connection.',
   'Schedule timing':'A recurrence must match the business calendar and time zone to run at the intended moment.',
   'Schedule parameters':'Parameters separate a run-specific input from the deployed orchestration design.',
   'Manual run':'An operator can start a configured schedule-style flow on demand without redefining its style.',
