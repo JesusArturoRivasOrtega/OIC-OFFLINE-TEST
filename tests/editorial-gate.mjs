@@ -17,8 +17,10 @@ for(const q of questions){
   if(q.source!=='Original editorial practice')issues.push(`${q.id}: still generated from a concept variation`);
   if(!q.questionEs)issues.push(`${q.id}: Spanish stem missing`);
   if(q.reference?.status!=='item-level verified')issues.push(`${q.id}: reference not verified for this item`);
+  if(q.reference?.status==='item-level verified'&&!q.reference.pdfPage&&!q.reference.url)issues.push(`${q.id}: verified reference lacks an exact page or URL`);
   if(q.verification!=='verified')issues.push(`${q.id}: answer not editorially verified`);
   if(q.options.some(x=>!x.why))issues.push(`${q.id}: option rationale missing`);
+  if(q.options.some(x=>!x.textEs||!x.whyEs))issues.push(`${q.id}: Spanish options or rationales missing`);
 }
 const stems=questions.map(q=>q.question.trim().toLowerCase());
 if(new Set(stems).size!==stems.length)issues.push('duplicate question stems');

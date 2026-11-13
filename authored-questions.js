@@ -9,7 +9,7 @@ window.OIC_AUTHORED_QUESTIONS = [
       ['An asynchronous design that acknowledges receipt and tracks later fulfillment','The caller can receive a timely acknowledgment while fulfillment continues and is monitored.'],
       ['A Connection test that confirms the order has been fulfilled','A Connection test checks configuration, not completion of a business transaction.'],
       ['A mapping-only integration with no operational tracking','Mapping alone neither establishes the interaction pattern nor provides recovery evidence.']
-    ], correct:['B'], reference:'Understand Integration Styles: Synchronous and Asynchronous'
+    ], correct:['B'], reference:'Understand Integration Styles: Differences Between Synchronous and Asynchronous Integrations', manualPdfPage:121, verification:'verified'
   },
   {
     replaces:'gen-started-07-03', categoryId:'started', topic:'Projects',
@@ -20,7 +20,7 @@ window.OIC_AUTHORED_QUESTIONS = [
       ['A single Trust Certificate as the workspace','A certificate supplies trust material; it does not group integration designs.'],
       ['An Invoke Connection in place of every integration','An Invoke calls a target and cannot contain the team’s orchestration.'],
       ['A Business Identifier as a deployment container','A Business Identifier supports tracking, not resource organization.']
-    ], correct:['A'], reference:'Get Started with Projects: About Projects'
+    ], correct:['A'], reference:'Get Started with Projects: About Projects', manualPdfPage:100, verification:'verified'
   },
   {
     replaces:'gen-connections-06-03', categoryId:'connections', topic:'OAuth client credentials',
@@ -31,7 +31,7 @@ window.OIC_AUTHORED_QUESTIONS = [
       ['Client Credentials, if supported by the API provider','Client Credentials is the service-to-service flow without interactive user authorization.'],
       ['A Business Identifier, because it is an access token','Business Identifiers are tracking fields, not OAuth grants.'],
       ['A TLS Trust Certificate alone, because it grants API authorization','TLS trust does not replace the API’s OAuth authorization policy.']
-    ], correct:['B'], reference:'Create Connections: Use OAuth with Outbound Calls'
+    ], correct:['B'], reference:'Use OAuth 2.0 in Oracle Integration: Use OAuth with Outbound Calls from Oracle Integration', manualPdfPage:368, supplementalUrl:'https://www.rfc-editor.org/rfc/rfc6749#section-4.4', verification:'verified'
   },
   {
     replaces:'gen-connections-07-03', categoryId:'connections', topic:'Authorization Code',
@@ -42,7 +42,7 @@ window.OIC_AUTHORED_QUESTIONS = [
       ['Authorization Code with the provider’s redirect flow','Authorization Code is built around an explicit user authorization and redirect exchange.'],
       ['SFTP password authentication','SFTP credentials do not express the API’s user-delegated OAuth flow.'],
       ['A schedule parameter containing the user’s password','A schedule parameter is not an OAuth grant and is not a safe replacement for consent.']
-    ], correct:['B'], reference:'Create Connections: Use OAuth 2.0'
+    ], correct:['B'], reference:'Use OAuth 2.0 in Oracle Integration: Use OAuth with Outbound Calls from Oracle Integration', manualPdfPage:368, supplementalUrl:'https://www.rfc-editor.org/rfc/rfc6749#section-4.1', verification:'verified'
   },
   {
     replaces:'gen-orchestration-06-03', categoryId:'orchestration', topic:'While',
@@ -53,18 +53,18 @@ window.OIC_AUTHORED_QUESTIONS = [
       ['Will Parallel force every poll to finish in sequence?','Parallel is for independent concurrent branches, not a termination control.'],
       ['Can a certificate make the condition false automatically?','Certificates provide security material, not loop-state management.'],
       ['Should the integration omit fault handling while it polls?','Polling still needs fault and timeout treatment.']
-    ], correct:['A'], reference:'Create Application Integrations: While Action'
+    ], correct:['A'], reference:'Add Actions to an Integration: Loop Over Actions or Invoke Connections While a Condition is Satisfied with a While Action', manualPdfPage:541, verification:'verified'
   },
   {
     replaces:'gen-orchestration-07-03', categoryId:'orchestration', topic:'Parallel',
     question:'An order flow must call tax and inventory services, and neither call needs the other’s response. What design can reduce elapsed time while preserving deliberate fault handling?',
     questionEs:'Un flujo de pedidos debe llamar a servicios de impuestos e inventario; ninguno necesita la respuesta del otro. ¿Qué diseño reduce el tiempo sin descuidar los errores?',
     options:[
-      ['Parallel branches with defined result and fault aggregation','Independent calls can run concurrently, but their outputs and failures still need explicit treatment.'],
+      ['Parallel branches for the independent Invokes, with result comparison and a Global Fault Handler','The manual uses parallel branches for independent calls and notes that faults can be caught at the integration level.'],
       ['A For Each loop over a single customer record','For Each is for repeating payload elements, not independent service concurrency.'],
       ['A single Assign action instead of both service calls','Assign sets variables; it cannot obtain tax and inventory responses.'],
       ['Two dependent invocations that assume the first output is required by the second','That dependency is absent from the case and would serialize work unnecessarily.']
-    ], correct:['A'], reference:'Create Application Integrations: Process Tasks in Parallel and Fault Aggregation'
+    ], correct:['A'], reference:'Add Actions to an Integration: Process Tasks in Parallel', manualPdfPage:531, verification:'verified'
   },
   {
     replaces:'gen-scheduled-06-03', categoryId:'scheduled', topic:'File polling',
@@ -72,10 +72,10 @@ window.OIC_AUTHORED_QUESTIONS = [
     questionEs:'Un proveedor deposita cada noche un CSV en un servidor SFTP. Ningún cliente llama a OIC cuando llega el archivo. ¿Qué patrón de inicio conviene?',
     options:[
       ['A REST Trigger waiting for an HTTP request from the supplier','The case has file arrival and a nightly cadence, not an HTTP caller.'],
-      ['A Scheduled Integration using a file Connection and Stage File processing','The schedule can initiate file retrieval and bounded file processing without an inbound caller.'],
+      ['A Scheduled Integration using an FTP Adapter Connection and Stage File processing','The schedule can initiate FTP Adapter retrieval; Stage File can then process the downloaded file without an inbound caller.'],
       ['A Business Identifier used as the file-transfer protocol','A tracking field cannot retrieve or parse a file.'],
       ['A Map Editor session that runs automatically at midnight','Map Editor defines mappings; it is not a scheduler.']
-    ], correct:['B'], reference:'Create Schedule Integrations and Stage File documentation'
+    ], correct:['B'], reference:'Understand Integration Styles: About Schedule Integrations; Process Files in Schedule Integrations with a Stage File Action', manualPdfPage:121, supplementalUrl:'https://docs.oracle.com/en/cloud/paas/application-integration/integrations-user/process-files-scheduled-integrations-stage-file-action.html', verification:'verified'
   },
   {
     replaces:'gen-scheduled-07-03', categoryId:'scheduled', topic:'Failure response',
@@ -105,21 +105,21 @@ window.OIC_AUTHORED_QUESTIONS = [
     questionEs:'Soporte pide registrar payloads completos de todas las transacciones de producción, incluidos identificadores personales. ¿Cuál es la respuesta adecuada?',
     options:[
       ['Enable unrestricted logging permanently to speed all future investigations','Permanent full logging can expose sensitive data and breach retention controls.'],
-      ['Use controlled diagnostics with masking, access, and retention decisions','Diagnostics must balance traceability with protection of sensitive payload data.'],
+      ['Use time-limited tracing only when permitted, with access and retention controls','Oracle warns that payload tracing affects performance and can store sensitive information contrary to retention rules.'],
       ['Remove Business Identifiers so no transaction can be found','Removing tracking hinders support and does not itself control payload logging.'],
       ['Put service credentials inside the payload to correlate records','Credentials must not be placed in business payloads or logs.']
-    ], correct:['B'], reference:'Observability strategy and security guidance'
+    ], correct:['B'], reference:'Activate and Deactivate Integrations: Manage Tracing Levels on Integrations', manualPdfPage:689, verification:'verified'
   },
   {
     replaces:'gen-ai-06-03', categoryId:'ai', topic:'RAG action',
     question:'An internal assistant must answer using only approved policy documents. Which architecture decision is essential before connecting it to OIC?',
     questionEs:'Un asistente interno debe responder solo con documentos de políticas aprobados. ¿Qué decisión de arquitectura es esencial antes de conectarlo a OIC?',
     options:[
-      ['Define the knowledge source, access permissions, and answer review','Grounding needs an approved source and governed access; generated answers still require evaluation.'],
+      ['Select an approved knowledge-base agent endpoint in an available region and compartment, then review the answers','The RAG action uses an agent endpoint containing the knowledge base; the region and compartment must expose that endpoint.'],
       ['Send all documents to every prompt without access checks','This bypasses document permissions and creates unnecessary data exposure.'],
       ['Replace the document repository with an SFTP password','A file-transfer credential is not a governed retrieval source.'],
       ['Assume RAG proves every answer factually correct','Grounding reduces unsupported answers but does not guarantee correctness.']
-    ], correct:['A'], reference:'Create Application Integrations: Generative AI Agents RAG Action'
+    ], correct:['A'], reference:'Add Actions to an Integration: Ask Questions and Receive Answers Based on Current Enterprise Data with a Generative AI Agents RAG Action', manualPdfPage:515, verification:'verified'
   },
   {
     replaces:'gen-ai-07-03', categoryId:'ai', topic:'Agentic AI',
@@ -131,13 +131,79 @@ window.OIC_AUTHORED_QUESTIONS = [
       ['Whether a prompt can be treated as a certified payment policy','A prompt alone is not a validated control or policy.'],
       ['Whether an OAuth client can replace the payment approver','OAuth grants access; it does not provide business authorization.']
     ], correct:['A'], reference:'AI Innovation: Automate with Agentic AI'
+  },
+  {
+    replaces:'gen-started-08-03', categoryId:'started', topic:'Project migration',
+    question:'A team moves a standalone Integration into a Project. An external client still calls the old endpoint URL. What must the deployment plan account for?',
+    questionEs:'Un equipo mueve una Integration independiente a un Project. Un cliente externo sigue llamando al URL anterior. ¿Qué debe contemplar el despliegue?',
+    options:[
+      ['The endpoint changes, so clients and routing configuration must be updated','Oracle warns that moving an Integration into a Project changes its endpoint.','El endpoint cambia; hay que actualizar clientes y configuración de rutas','Oracle advierte que mover una Integration a un Project cambia su endpoint.'],
+      ['The endpoint remains identical because a Project is only a visual folder','A Project has deployment and access behavior; the manual warns about endpoint changes.','El endpoint queda idéntico porque Project solo es una carpeta visual','Project tiene comportamiento de despliegue y acceso; el manual advierte del cambio de endpoint.'],
+      ['Only the Business Identifier changes automatically','Tracking fields are not the documented migration consequence.','Solo cambia automáticamente el Business Identifier','Los campos de seguimiento no son la consecuencia documentada de la migración.'],
+      ['Every client is redirected to the new endpoint without configuration','The manual does not promise automatic redirection of external clients.','Todos los clientes se redirigen sin configuración al nuevo endpoint','El manual no promete redirección automática de los clientes externos.']
+    ], correct:['A'], reference:'Get Started with Projects: Factors to Consider Before Importing Integrations into Projects', manualPdfPage:101, verification:'verified'
+  },
+  {
+    replaces:'gen-connections-08-03', categoryId:'connections', topic:'Developer API security',
+    question:'A service account must call Oracle Integration Developer APIs. The team notes that some Integration endpoints permit Basic Authorization. Which security decision applies to the Developer APIs?',
+    questionEs:'Una cuenta de servicio debe llamar a las Oracle Integration Developer APIs. El equipo sabe que algunos endpoints de Integration permiten Basic Authorization. ¿Qué decisión de seguridad corresponde a las Developer APIs?',
+    options:[
+      ['Use OAuth with the required client application, scopes and roles','Oracle states that OAuth is required for the Developer APIs.','Usar OAuth con la aplicación cliente, scopes y roles requeridos','Oracle indica que OAuth es obligatorio para las Developer APIs.'],
+      ['Use Basic Authorization because every Oracle Integration endpoint accepts it','The manual distinguishes Integration endpoints from Developer APIs; OAuth is required for the latter.','Usar Basic Authorization porque todos los endpoints de Oracle Integration lo aceptan','El manual distingue endpoints de Integration y Developer APIs; estas últimas requieren OAuth.'],
+      ['Publish the account password as a schedule parameter','A schedule parameter is not an API security policy and would expose a secret.','Publicar la contraseña como schedule parameter','Un schedule parameter no es una política de seguridad de API y expondría un secreto.'],
+      ['Replace authorization with a Business Identifier','Business Identifiers are tracking data, not API access tokens.','Sustituir autorización por un Business Identifier','Business Identifiers sirven para seguimiento, no son access tokens.']
+    ], correct:['A'], reference:'Use OAuth 2.0 in Oracle Integration: You Must Use OAuth with the Oracle Integration Developer APIs', manualPdfPage:372, verification:'verified'
+  },
+  {
+    replaces:'gen-orchestration-08-03', categoryId:'orchestration', topic:'Stage File large-file processing',
+    question:'An FTP Adapter downloads a 100 MB CSV. The flow must parse records without loading the entire file into one Stage File read. Which operation fits?',
+    questionEs:'Un FTP Adapter descarga un CSV de 100 MB. El flujo debe analizar registros sin cargar todo el archivo en una sola lectura de Stage File. ¿Qué operación corresponde?',
+    options:[
+      ['Read Entire File with a larger tracking field','The manual limits Read Entire File to files smaller than 10 MB; tracking does not change that.','Read Entire File con un campo de seguimiento más grande','El manual limita Read Entire File a archivos menores de 10 MB; el seguimiento no cambia ese límite.'],
+      ['Read File in Segments with an appropriate Segment Size','The operation processes logical chunks to stay within memory constraints.','Read File in Segments con un Segment Size adecuado','La operación procesa segmentos lógicos para respetar los límites de memoria.'],
+      ['A Switch action that divides the binary file automatically','Switch routes by an expression; it does not parse a file into chunks.','Un Switch que divida automáticamente el archivo binario','Switch enruta por una expresión; no analiza el archivo por segmentos.'],
+      ['A Global Fault Handler that increases memory on each retry','Fault handling does not raise the file-read memory limit.','Un Global Fault Handler que aumente memoria en cada reintento','El manejo de fallos no aumenta el límite de memoria de lectura.']
+    ], correct:['B'], reference:'Add Actions to an Integration: Configure Stage File Operations; Read File in Segments', manualPdfPage:451, verification:'verified'
+  },
+  {
+    replaces:'gen-scheduled-08-03', categoryId:'scheduled', topic:'Parameterized schedule recovery',
+    question:'A Scheduled Integration with schedule parameters fails after it starts. Which statement matches the documented Resubmit behavior?',
+    questionEs:'Una Scheduled Integration con schedule parameters falla después de iniciar. ¿Qué afirmación coincide con el comportamiento documentado de Resubmit?',
+    options:[
+      ['Oracle automatically resubmits every failed schedule','Oracle explicitly states that it does not automatically resubmit failed messages.','Oracle ejecuta Resubmit automáticamente para cada schedule fallido','Oracle indica expresamente que no ejecuta Resubmit automáticamente.'],
+      ['The parameterized scheduled instance is nonrecoverable; investigate before a controlled new run','The manual names scheduled flows with scheduled parameters as an exception to recoverable asynchronous flows.','La instancia programada con parámetros no es recuperable; hay que investigar antes de una nueva ejecución controlada','El manual señala a los flujos programados con parámetros como excepción de los flujos asíncronos recuperables.'],
+      ['A synchronous flow can always be resubmitted from Observability','The manual says synchronous flows cannot be resubmitted.','Un flujo síncrono siempre admite Resubmit desde Observability','El manual indica que los flujos síncronos no admiten Resubmit.'],
+      ['Deleting the failed instance makes it recoverable','Discarding a message prevents later resubmission.','Borrar la instancia fallida la vuelve recuperable','Descartar un mensaje impide ejecutar Resubmit posteriormente.']
+    ], correct:['B'], reference:'Manage Errors: Resubmit Failed Messages', manualPdfPage:804, verification:'verified'
+  },
+  {
+    replaces:'gen-monitoring-08-03', categoryId:'monitoring', topic:'Tracing on active integrations',
+    question:'An active Integration needs temporary payload diagnostics. Which change is documented without first deactivating the Integration?',
+    questionEs:'Una Integration activa necesita diagnóstico temporal de payloads. ¿Qué cambio está documentado sin desactivarla primero?',
+    options:[
+      ['Use Design > Integrations > Actions > Configure activation to adjust tracing, considering performance and retention','Oracle documents this path and warns about payload-trace performance and sensitive-data retention.','Usar Design > Integrations > Actions > Configure activation para ajustar tracing y considerar rendimiento y retención','Oracle documenta esa ruta y advierte sobre rendimiento y retención de datos sensibles.'],
+      ['Restart the entire OCI tenancy to clear tracing settings','The documented action is on the active Integration; a tenancy restart is not the procedure.','Reiniciar toda la tenancy OCI para limpiar tracing','La acción documentada se realiza en la Integration activa; reiniciar la tenancy no es el procedimiento.'],
+      ['Change the target password to enable payload logging','Credentials and tracing are separate configuration concerns.','Cambiar la contraseña del destino para activar payload logging','Credenciales y tracing son configuraciones diferentes.'],
+      ['Enable Debug permanently in production without checking data policy','Oracle discourages debug or audit in production and warns about sensitive payload retention.','Mantener Debug en producción sin revisar la política de datos','Oracle desaconseja debug o audit en producción y advierte sobre retención de payloads sensibles.']
+    ], correct:['A'], reference:'Activate and Deactivate Integrations: Manage Tracing Levels on Integrations', manualPdfPage:689, verification:'verified'
+  },
+  {
+    replaces:'gen-ai-08-03', categoryId:'ai', topic:'RAG conversation sessions',
+    question:'An OCI Generative AI Agents RAG Action should continue an earlier conversation rather than start a new one. What must the mapper provide?',
+    questionEs:'Una OCI Generative AI Agents RAG Action debe continuar una conversación anterior en vez de iniciar otra. ¿Qué debe proporcionar el mapper?',
+    options:[
+      ['The previous response Session Id mapped to the request Session Id','The manual says to map the earlier response Session Id to continue that session.','El Session Id de la respuesta anterior mapeado al Session Id de la solicitud','El manual indica mapear el Session Id de la respuesta anterior para continuar esa sesión.'],
+      ['No Session Id, because omission always resumes the latest chat','Without a Session Id the action creates a new session.','Ningún Session Id porque la omisión siempre reanuda el chat más reciente','Sin Session Id la acción crea una sesión nueva.'],
+      ['A Business Identifier in place of Session Id','Business Identifiers track Integration instances and do not supply the RAG chat session.','Un Business Identifier en lugar de Session Id','Business Identifiers siguen instancias de Integration, no la sesión de chat RAG.'],
+      ['A new knowledge base on every request','The agent endpoint supplies the knowledge base; replacing it does not resume a conversation.','Una knowledge base nueva en cada solicitud','El agent endpoint aporta la knowledge base; reemplazarla no reanuda la conversación.']
+    ], correct:['A'], reference:'Add Actions to an Integration: Invoke Oracle Cloud Infrastructure Generative AI Agents RAG from an Integration', manualPdfPage:516, verification:'verified'
   }
 ].map(item=>({
   id:item.replaces,categoryId:item.categoryId,topic:item.topic,question:item.question,questionEs:item.questionEs,
-  options:item.options.map(([text,why],i)=>({id:String.fromCharCode(65+i),text,correct:item.correct.includes(String.fromCharCode(65+i)),why})),
+  options:item.options.map(([text,why,textEs,whyEs],i)=>({id:String.fromCharCode(65+i),text,textEs:textEs||null,correct:item.correct.includes(String.fromCharCode(65+i)),why,whyEs:whyEs||null})),
   correct:item.correct,multi:false,difficulty:'professional',type:'scenario',
-  source:'Original editorial practice',sourceType:'original',verification:'editorial draft',
-  reference:{title:'Oracle Cloud Using Integrations in Oracle Integration 3',edition:'G36915-54, October 2026',section:item.reference,status:'section pointer; item-level review pending'},
+  source:'Original editorial practice',sourceType:'original',verification:item.verification||'editorial draft',
+  reference:{title:'Oracle Cloud Using Integrations in Oracle Integration 3',edition:'G36915-54, October 2026',section:item.reference,pdfPage:item.manualPdfPage||null,supplementalUrl:item.supplementalUrl||null,status:item.verification==='verified'?'item-level verified':'section pointer; item-level review pending'},
   explanation:item.options.find((_,i)=>item.correct.includes(String.fromCharCode(65+i)))?.[1],
   createdFor:'OIC Certification Academy 2026'
 }));
