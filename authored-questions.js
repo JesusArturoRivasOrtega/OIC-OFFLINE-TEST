@@ -255,14 +255,14 @@ window.OIC_AUTHORED_QUESTIONS = [
   },
   {
     replaces:'gen-orchestration-10-03', categoryId:'orchestration', topic:'Stage File whole-file limit',
-    question:'A Stage File action must read a 14 MB file. Why is Read Entire File the wrong operation?',
-    questionEs:'Una Stage File action debe leer un archivo de 14 MB. ¿Por qué Read Entire File es la operación incorrecta?',
+    question:'A Stage File action must process a 150 MB file. Which operation avoids loading the whole file in one read?',
+    questionEs:'Una acción Stage File debe procesar un archivo de 150 MB. ¿Qué operación evita cargar todo el archivo en una sola lectura?',
     options:[
-      ['Its documented file-size limit is less than 10 MB; use Read File in Segments for larger files','The file exceeds the Read Entire File limit and requires the segmented operation.','Su límite documentado es menor de 10 MB; para archivos mayores se usa Read File in Segments','El archivo supera el límite de Read Entire File y requiere la operación segmentada.'],
-      ['Stage File cannot process any file larger than 10 MB','The manual specifically directs larger files to Read File in Segments.','Stage File no puede procesar ningún archivo mayor de 10 MB','La documentación dirige los archivos mayores a Read File in Segments.'],
+      ['Read File in Segments with an appropriate segment size','Segmented reading processes logical chunks; a 150 MB file exceeds the whole-file limits stated in both Oracle references.','Read File in Segments con un tamaño de segmento adecuado','La lectura segmentada procesa bloques; 150 MB supera los límites de lectura completa indicados en ambas referencias de Oracle.'],
+      ['Stage File cannot process files larger than the whole-file limit','The segmented operation exists for files that should not be read entirely in one operation.','Stage File no puede procesar archivos mayores que el límite de lectura completa','Existe la operación segmentada para archivos que no deben leerse completos en una sola operación.'],
       ['Only a Business Identifier can raise the read limit','A tracking field does not change file-read limits.','Solo un Business Identifier puede aumentar el límite','Un campo de seguimiento no cambia los límites de lectura de archivos.'],
       ['The file must be renamed to XML before reading','Changing the extension does not change the operation limit or parse the content.','Debe renombrarse el archivo a XML antes de leerlo','Cambiar la extensión no modifica el límite ni analiza el contenido.']
-    ], correct:['A'], reference:'Add Actions to an Integration: Configure Stage File Operations - Read Entire File', manualPdfPage:451, verification:'verified'
+    ], correct:['A'], reference:'Add Actions to an Integration: Configure Stage File Operations - Read File in Segments', manualPdfPage:451, supplementalUrl:'https://docs.oracle.com/en/cloud/paas/application-integration/oracle-integration-oci/component-integrations.html', verification:'verified'
   },
   {
     replaces:'gen-scheduled-09-03', categoryId:'scheduled', topic:'Scheduler resource contention',

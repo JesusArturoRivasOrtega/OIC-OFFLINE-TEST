@@ -15,7 +15,7 @@ An offline-first, static Progressive Web App for studying Oracle Integration 3 c
 
 ## Copyright and source handling
 
-The repository deliberately excludes the supplied Udemy PDFs, 2024 notes, Oracle documentation, and all OCR output. Most public practice prompts are provisional learning material with source-section pointers to *Oracle Cloud Using Integrations in Oracle Integration 3*, G36915-54, October 2026. Fifteen original items have an item-level answer and reference check; the remaining 285 do not. The questions do not reproduce Oracle documentation or represent an official Oracle certification question bank.
+The repository deliberately excludes the supplied Udemy PDFs, 2024 notes, Oracle documentation, and all OCR output. Most public practice prompts are provisional learning material with source-section pointers to *Oracle Cloud Using Integrations in Oracle Integration 3*, G36915-54, October 2026. Thirty original items have item-level answer and reference checks; the remaining 270 are still provisional concept variations and are not individually verified questions. The questions do not reproduce Oracle documentation or represent an official Oracle certification question bank.
 
 Private extracts are kept outside the repository: 272 OCR candidate questions from the supplied PDFs and 66 candidate study questions from the 2024 notes. Proposed answers from notes are **not verified** and no private question is used for scored public practice.
 
@@ -43,7 +43,7 @@ The test verifies category weights, prompt counts and metadata, the 10/15/15/10 
 
 Deploy from the `main` branch and `/(root)` in **Settings → Pages**. Open the Pages URL once while online so the service worker can cache the application. On iPhone Safari, choose **Share → Add to Home Screen**. Keep an exported progress backup before clearing browser data or changing devices.
 
-An offline browser-cache smoke test and narrow mobile viewport check have been performed. Installation and airplane-mode behavior on a **physical iPhone running Safari** remain to be tested.
+An offline browser-cache smoke test and narrow mobile viewport check have been performed. The user's earlier airplane-mode test on iPhone Safari failed before the v15 service-worker changes. After publishing those changes, reopen the app online and wait for the status to say **Offline-ready**, then test again in airplane mode. This repository has no access to a physical iPhone, so the post-fix device test remains outstanding.
 
 ## Verification limits
 

@@ -125,8 +125,11 @@ window.OIC_DATA = (() => {
         const selectedForm=variant<4?forms[variant]:finalForm;
         const q=extra?`Which statements about ${topic} are accurate? Select all that apply.`:selectedForm.en(topic);
         const es=extra?`¿Qué afirmaciones sobre ${topicTranslations[topic]||topic} son correctas? Selecciona todas las que correspondan.`:selectedForm.es(topic);
-        const options=[answer,...distractors,...(extra?[extra]:[])].map((text,index)=>({id:String.fromCharCode(65+index),text,correct:index===0||!!extra&&index===4,why:index===0||!!extra&&index===4?window.OIC_CORRECT_WHY?.[topic]||`This is the supported rule for ${topic}: ${text}`:window.OIC_RATIONALES?.[topic]?.[index-1]||`This conflicts with the supported rule: ${answer}`}));
-        return {id:`gen-${category.id}-${String(factIndex+1).padStart(2,'0')}-${String(variant+1).padStart(2,'0')}`,categoryId:category.id,topic,question:q,questionEs:es,options,correct:extra?['A','E']:['A'],multi:!!extra,difficulty:form.kind==='fundamentals'?'basic':form.kind==='expert'?'expert':'professional',type:form.kind,source:'Generated practice',sourceType:'original',verification:'provisional',reference:reference(section),explanation:`${answer}${extra?' '+extra:''} This original practice item is based on ${section}.`,createdFor:'OIC Certification Academy 2026'};
+        const choices=[answer,...distractors,...(extra?[extra]:[])].map((text,index)=>({text,correct:index===0||!!extra&&index===4,why:index===0||!!extra&&index===4?window.OIC_CORRECT_WHY?.[topic]||`This is the supported rule for ${topic}: ${text}`:window.OIC_RATIONALES?.[topic]?.[index-1]||`This conflicts with the supported rule: ${answer}`}));
+        const offset=(factIndex+variant)%choices.length;
+        const options=choices.map((_,index)=>choices[(index+offset)%choices.length]).map((choice,index)=>({...choice,id:String.fromCharCode(65+index)}));
+        const correct=options.filter(option=>option.correct).map(option=>option.id);
+        return {id:`gen-${category.id}-${String(factIndex+1).padStart(2,'0')}-${String(variant+1).padStart(2,'0')}`,categoryId:category.id,topic,question:q,questionEs:es,options,correct,multi:!!extra,difficulty:form.kind==='fundamentals'?'basic':form.kind==='expert'?'expert':'professional',type:form.kind,source:'Generated practice',sourceType:'original',verification:'provisional',reference:reference(section),explanation:`${answer}${extra?' '+extra:''} This original practice item is based on ${section}.`,createdFor:'OIC Certification Academy 2026'};
       });
     }));
   }
