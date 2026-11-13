@@ -10,13 +10,14 @@ window.OIC_ENGINE = (() => {
     const ease=Math.max(1.3,(previous.ease||2.5)+0.1-(5-q)*(0.08+(5-q)*0.02));
     return {repetitions,interval,ease,due:now+interval*DAY,lastReviewed:now,lastQuality:q};
   }
-  function selection(pool,count,filter='mixed',answers={},random=Math.random){
+  function selection(pool,count,filter='mixed',answers={},random=Math.random,seenIds=[]){
     const seen=new Set(Object.keys(answers));
     let eligible=pool;
     if(filter==='professional')eligible=pool.filter(q=>q.difficulty==='professional');
     if(filter==='expert')eligible=pool.filter(q=>q.difficulty==='expert');
-    if(filter==='unanswered'||filter==='new')eligible=pool.filter(q=>!seen.has(q.id));
-    if(filter==='incorrect')eligible=pool.filter(q=>answers[q.id]&&answers[q.id].correct===false);
+    if(filter==='unanswered')eligible=pool.filter(q=>!seen.has(q.id));
+    if(filter==='new'){const shown=new Set(seenIds);eligible=pool.filter(q=>!shown.has(q.id))}
+    if(filter==='incorrect')eligible=pool.filter(q=>answers[q.id]&&(answers[q.id].everIncorrect||answers[q.id].correct===false));
     if(filter==='split'){
       const selected=[...shuffle(pool.filter(q=>q.difficulty==='professional'),random).slice(0,5),...shuffle(pool.filter(q=>q.difficulty==='expert'),random).slice(0,5)];
       return shuffle(selected,random);

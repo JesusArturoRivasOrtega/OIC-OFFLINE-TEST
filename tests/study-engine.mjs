@@ -20,4 +20,11 @@ for(const [id,count] of Object.entries(expected))assert(a.filter(q=>q.categoryId
 const split=E.selection(D.questions,10,'split',{},E.createRng(3));
 assert(split.length===10&&split.filter(q=>q.difficulty==='professional').length===5&&split.filter(q=>q.difficulty==='expert').length===5,'Quick split must have five questions at each difficulty');
 assert(new Set(split.map(q=>q.id)).size===10,'Quick round must not repeat questions');
+const sample=D.questions.slice(0,3),history={[sample[0].id]:{correct:true},[sample[1].id]:{correct:true,everIncorrect:true}};
+const unanswered=E.selection(sample,10,'unanswered',history,E.createRng(1),[sample[0].id,sample[2].id]);
+const fresh=E.selection(sample,10,'new',history,E.createRng(1),[sample[0].id,sample[2].id]);
+const incorrect=E.selection(sample,10,'incorrect',history,E.createRng(1));
+assert(unanswered.length===1&&unanswered[0].id===sample[2].id,'Unanswered should include a seen but skipped question');
+assert(fresh.length===1&&fresh[0].id===sample[1].id,'New should mean never shown, even if answered history differs');
+assert(incorrect.length===1&&incorrect[0].id===sample[1].id,'Previously incorrect should retain corrected misses');
 console.log('Study engine validation passed.');
