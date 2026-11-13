@@ -86,6 +86,14 @@ window.OIC_DATA = (() => {
   };
 
   const translations = {started:'Fundamentos',connections:'Conexiones',orchestration:'Orquestación',scheduled:'Programadas',monitoring:'Monitoreo',ai:'Capacidades AI'};
+  const topicTranslations = {
+    'Integration versus Connection':'Integration y Connection','Trigger direction':'dirección de Trigger','Invoke direction':'dirección de Invoke','Application Integration':'Application Integration','Synchronous design':'diseño síncrono','Asynchronous design':'diseño asíncrono','Projects':'Projects','Activation':'activación','Business Identifiers':'Business Identifiers','REST and SOAP':'REST y SOAP',
+    'Connection test':'prueba de Connection','Connectivity Agent':'Connectivity Agent','Private Endpoint':'Private Endpoint','Trust Certificate':'Trust Certificate','Identity Certificate':'Identity Certificate','OAuth client credentials':'OAuth Client Credentials','Authorization Code':'Authorization Code','SFTP':'SFTP','REST Adapter':'REST Adapter','Dynamic endpoint changes':'cambios dinámicos del endpoint',
+    'Map Editor':'Map Editor','Data Stitch':'Data Stitch','Assign':'Assign','Switch':'Switch','For Each':'For Each','While':'While','Parallel':'Parallel','Scope fault handler':'manejo de fallos en Scope','Stage File':'Stage File','Re-throw Fault':'Re-throw Fault',
+    'Schedule Integration':'Schedule Integration','Schedule timing':'horario de ejecución','Schedule parameters':'schedule parameters','Manual run':'ejecución manual','Batch design':'diseño de procesos por lotes','File polling':'sondeo de archivos','Failure response':'respuesta ante fallos','iCal':'iCal','Nightly processing':'procesamiento nocturno','Run calendar':'calendario de ejecuciones',
+    'Activity and observability':'actividad y observabilidad','Business tracking':'seguimiento comercial','HTTP 401':'HTTP 401','HTTP 403':'HTTP 403','HTTP 429':'HTTP 429','HTTP 503':'HTTP 503','Payload logging':'registro de payloads','Connection failure':'fallo de Connection','Transformation diagnostics':'diagnóstico de transformaciones','Resubmit decision':'decisión de Resubmit',
+    'AI Assistant scope':'alcance de AI Assistant','Natural language creation':'creación mediante lenguaje natural','AI mapping recommendations':'recomendaciones de mapeo con AI','AI troubleshooting':'diagnóstico asistido por AI','OCI Generative AI':'OCI Generative AI','RAG action':'RAG action','Agentic AI':'Agentic AI','AI security':'seguridad de AI','AI descriptions':'descripciones generadas por AI','Feature availability':'disponibilidad de funciones'
+  };
   const multiStatements={
     'Integration versus Connection':'An Adapter provides the connectivity capability configured by a Connection.',
     'Trigger direction':'A Trigger can receive an inbound request when its Adapter supports that operation.',
@@ -102,22 +110,23 @@ window.OIC_DATA = (() => {
     'AI mapping recommendations':'The developer should verify semantic meaning, data type and cardinality.',
     'AI security':'Protected data access should follow least-privilege controls.'
   };
-  const lenses = [
-    {kind:'fundamentals',lead:'Which statement is correct about'},
-    {kind:'application',lead:'A developer must make a design decision about'},
-    {kind:'scenario',lead:'In a business scenario, what is the best choice concerning'},
-    {kind:'expert',lead:'During an architecture review, which conclusion is most defensible about'}
+  const forms = [
+    {kind:'fundamentals',en:t=>`Which statement about ${t} is correct? Select one answer.`,es:t=>`¿Qué afirmación sobre ${topicTranslations[t]||t} es correcta? Selecciona una respuesta.`},
+    {kind:'application',en:t=>`When designing an OIC flow involving ${t}, which guidance applies? Select one answer.`,es:t=>`Al diseñar un flujo OIC relacionado con ${topicTranslations[t]||t}, ¿qué recomendación corresponde? Selecciona una respuesta.`},
+    {kind:'scenario',en:t=>`During a production review of ${t}, which behavior should the team expect? Select one answer.`,es:t=>`Durante la revisión de producción de ${topicTranslations[t]||t}, ¿qué comportamiento debe esperar el equipo? Selecciona una respuesta.`},
+    {kind:'expert',en:t=>`An operator asks about ${t}. Which response is supported? Select one answer.`,es:t=>`Un operador pregunta sobre ${topicTranslations[t]||t}. ¿Qué respuesta está respaldada? Selecciona una respuesta.`}
   ];
+  const finalForm={en:t=>`What is the key design implication of ${t}? Select one answer.`,es:t=>`¿Cuál es la principal implicación de diseño de ${topicTranslations[t]||t}? Selecciona una respuesta.`};
   function practiceQuestions(){
     return categories.flatMap(category => facts[category.id].flatMap(([topic,answer,distractors,section], factIndex) => {
-      const lens = lenses[factIndex < 2 ? 0 : factIndex < 5 ? 1 : factIndex < 8 ? 2 : 3];
+      const form = forms[factIndex < 2 ? 0 : factIndex < 5 ? 1 : factIndex < 8 ? 2 : 3];
       return Array.from({length:5},(_,variant) => {
-        const suffix = ['Select the accurate statement.','Select the option that preserves a supportable OIC design.','Avoid assuming undocumented behavior.','Use the documented behavior as the basis for your decision.','Choose the answer supported by the referenced guidance.'][variant];
         const extra=variant===4?multiStatements[topic]:null;
-        const q = `${lens.lead} ${topic}? ${extra?'Select all accurate statements.':suffix}`;
-        const es = `${lens.kind==='fundamentals'?'Fundamentos':lens.kind==='application'?'Aplicación técnica':lens.kind==='scenario'?'Escenario empresarial':'Arquitectura avanzada'}: ¿qué afirmación es correcta acerca de ${topic}?`;
+        const selectedForm=variant<4?forms[variant]:finalForm;
+        const q=extra?`Which statements about ${topic} are accurate? Select all that apply.`:selectedForm.en(topic);
+        const es=extra?`¿Qué afirmaciones sobre ${topicTranslations[topic]||topic} son correctas? Selecciona todas las que correspondan.`:selectedForm.es(topic);
         const options=[answer,...distractors,...(extra?[extra]:[])].map((text,index)=>({id:String.fromCharCode(65+index),text,correct:index===0||!!extra&&index===4,why:index===0||!!extra&&index===4?window.OIC_CORRECT_WHY?.[topic]||`This is the supported rule for ${topic}: ${text}`:window.OIC_RATIONALES?.[topic]?.[index-1]||`This conflicts with the supported rule: ${answer}`}));
-        return {id:`gen-${category.id}-${String(factIndex+1).padStart(2,'0')}-${String(variant+1).padStart(2,'0')}`,categoryId:category.id,topic,question:q,questionEs:es,options,correct:extra?['A','E']:['A'],multi:!!extra,difficulty:lens.kind==='fundamentals'?'basic':lens.kind==='application'?'professional':lens.kind==='scenario'?'professional':'expert',type:lens.kind,source:'Generated practice',sourceType:'original',verification:'provisional',reference:reference(section),explanation:`${answer}${extra?' '+extra:''} This original practice item is based on ${section}.`,createdFor:'OIC Certification Academy 2026'};
+        return {id:`gen-${category.id}-${String(factIndex+1).padStart(2,'0')}-${String(variant+1).padStart(2,'0')}`,categoryId:category.id,topic,question:q,questionEs:es,options,correct:extra?['A','E']:['A'],multi:!!extra,difficulty:form.kind==='fundamentals'?'basic':form.kind==='expert'?'expert':'professional',type:form.kind,source:'Generated practice',sourceType:'original',verification:'provisional',reference:reference(section),explanation:`${answer}${extra?' '+extra:''} This original practice item is based on ${section}.`,createdFor:'OIC Certification Academy 2026'};
       });
     }));
   }
