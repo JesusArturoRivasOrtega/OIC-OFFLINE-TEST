@@ -1,0 +1,7 @@
+{
+  "name": "oic-certification-academy-2026",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Offline static PWA for OIC study.",
+  "scripts": {"test": "node tests/validate-data.mjs"}
+}

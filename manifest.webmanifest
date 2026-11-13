@@ -1,0 +1,11 @@
+{
+  "name": "OIC Certification Academy 2026",
+  "short_name": "OIC Academy",
+  "description": "Offline preparation for Oracle Integration 3 certification 1Z0-1042-26.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f7f9fc",
+  "theme_color": "#172554",
+  "icons": [{"src":"assets/oic-academy.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
+}
