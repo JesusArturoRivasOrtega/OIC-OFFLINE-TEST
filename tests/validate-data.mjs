@@ -19,8 +19,11 @@ for(const item of context.window.OIC_DATA.troubleshooting){const detail=context.
 if(categories.length!==6)throw new Error(`Expected six categories, got ${categories.length}`);
 const weights=categories.reduce((n,c)=>n+c.weight,0);if(weights!==100)throw new Error(`Weights must total 100, got ${weights}`);
 for(const c of categories){const bank=questions.filter(q=>q.categoryId===c.id);if(bank.length!==50)throw new Error(`${c.id} requires 50 questions, got ${bank.length}`);if(new Set(bank.map(q=>q.id)).size!==50)throw new Error(`${c.id} has duplicate IDs`);const kinds=Object.fromEntries(['fundamentals','application','scenario','expert'].map(k=>[k,bank.filter(q=>q.type===k).length]));const expected={fundamentals:10,application:15,scenario:15,expert:10};for(const [k,n] of Object.entries(expected))if(kinds[k]!==n)throw new Error(`${c.id} ${k}: expected ${n}, got ${kinds[k]}`);for(const q of bank){if(q.sourceType!=='original'||!['Generated practice','Original editorial practice'].includes(q.source))throw new Error(`${q.id} must be public original practice`);if(!q.reference?.section||!q.correct?.length||q.options.length<4)throw new Error(`${q.id} lacks required metadata`);if(q.options.some(o=>!o.why||o.why.length<25))throw new Error(`${q.id} lacks an option-specific rationale`)}}
-if(questions.filter(q=>q.source==='Original editorial practice').length!==18)throw new Error('Expected 18 authored case replacements');
-if(questions.filter(q=>q.verification==='verified').length!==15)throw new Error('Expected 15 individually checked answers');
-if(questions.filter(q=>q.options.every(o=>o.textEs&&o.whyEs)).length!==6)throw new Error('Expected six fully bilingual answer sets');
+const authored=questions.filter(q=>q.source==='Original editorial practice');
+if(authored.length!==30)throw new Error('Expected 30 authored case replacements');
+if(authored.some(q=>q.verification!=='verified'||q.reference.status!=='item-level verified'||!q.reference.pdfPage&&!q.reference.url))throw new Error('Every authored answer needs a verified item-level reference');
+if(authored.some(q=>!q.questionEs||q.options.some(o=>!o.textEs||!o.whyEs)))throw new Error('Every authored item needs full Spanish options and rationales');
+if(authored.some(q=>q.correct.some(id=>!q.options.some(o=>o.id===id&&o.correct))||q.options.some(o=>o.correct!==q.correct.includes(o.id))))throw new Error('Authored answer flags and correct IDs disagree');
+if(new Set(questions.map(q=>q.question.trim().toLowerCase())).size!==questions.length)throw new Error('Duplicate question stems');
 const distribution={started:7,connections:10,orchestration:16,scheduled:5,monitoring:6,ai:6};if(Object.values(distribution).reduce((a,b)=>a+b,0)!==50)throw new Error('Exam distribution must total 50');
-console.log(`Validated ${questions.length} practice prompts, including 18 original case replacements; remaining variants and item references still require editorial review.`);
+console.log(`Validated ${questions.length} practice prompts, including ${authored.length} bilingual source-backed case replacements; remaining variants and item references still require editorial review.`);

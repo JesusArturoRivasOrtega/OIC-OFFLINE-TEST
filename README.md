@@ -5,7 +5,7 @@ An offline-first, static Progressive Web App for studying Oracle Integration 3 c
 ## What is included
 
 - Six exam categories with the supplied 14/20/32/10/12/12 weighting.
-- 300 practice prompts: 18 are original, scenario-specific editorial replacements (15 have item-level answer and reference checks); 282 still use variations of 60 concept records. Exactly 50 appear per category, split 10 fundamentals, 15 application, 15 scenario, and 10 expert. These are **not 300 individually reviewed questions** or official Oracle exam questions.
+- 300 practice prompts: 30 are original, bilingual, scenario-specific editorial replacements with item-level answer and reference checks; 270 still use variations of 60 concept records. Exactly 50 appear per category, split 10 fundamentals, 15 application, 15 scenario, and 10 expert. These are **not 300 individually reviewed questions** or official Oracle exam questions.
 - 40 bilingual grouped chapters with distinct technical walkthroughs and source-section references, completion and resume tracking, text highlighting, fragment notes, and personal flashcards. They still require deeper coverage and objective-by-objective editorial review.
 - Eleven guided OIC labs prepared for validation in a real tenancy; expanded architecture and troubleshooting cases, glossary, and flashcards. The labs have **not** been executed in an OIC instance.
 - Quick 10-question rounds with difficulty and review filters, a configurable-timer 50-question simulator with autosave/resume and category reporting, spaced-review scheduling, and a local dashboard.

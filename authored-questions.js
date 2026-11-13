@@ -78,15 +78,15 @@ window.OIC_AUTHORED_QUESTIONS = [
     ], correct:['B'], reference:'Understand Integration Styles: About Schedule Integrations; Process Files in Schedule Integrations with a Stage File Action', manualPdfPage:121, supplementalUrl:'https://docs.oracle.com/en/cloud/paas/application-integration/integrations-user/process-files-scheduled-integrations-stage-file-action.html', verification:'verified'
   },
   {
-    replaces:'gen-scheduled-07-03', categoryId:'scheduled', topic:'Failure response',
-    question:'A nightly batch reports a fault after some records reached the target. Before rerunning, what should the operator establish?',
-    questionEs:'Un proceso nocturno falla después de que algunos registros llegaron al destino. Antes de repetirlo, ¿qué debe comprobar el operador?',
+    replaces:'gen-scheduled-07-03', categoryId:'scheduled', topic:'Schedule backlog',
+    question:'Several long-running Scheduled Integrations begin at the same minute and later jobs start late. Which change follows Oracle’s scheduler guidance?',
+    questionEs:'Varias Scheduled Integrations de larga duración comienzan en el mismo minuto y los trabajos posteriores arrancan tarde. ¿Qué cambio sigue la guía de Oracle?',
     options:[
-      ['Whether the target committed records and how duplicate processing is prevented','Partial success changes the safe recovery choice; reruns need idempotency or record-level reconciliation.'],
-      ['That every failed run can be replayed without review','A failed overall status does not prove that no business record was committed.'],
-      ['That tracking data should be deleted first','Deleting evidence impedes diagnosis and reconciliation.'],
-      ['That a new REST Trigger will repair the batch history','A different trigger does not resolve partial commits or recovery.']
-    ], correct:['A'], reference:'Monitoring Integrations and Error Management'
+      ['Spread start times and avoid long-running schedule work','Oracle recommends avoiding schedule clusters and long runs that occupy scheduler resources.'],
+      ['Move all schedules to the same minute','This increases the contention that delays scheduled starts.'],
+      ['Increase every schedule frequency to once per minute','More frequent runs can increase the backlog.'],
+      ['Disable Observability to free scheduler capacity','Monitoring is not identified as the cause or fix for scheduler contention.']
+    ], correct:['A'], reference:'Best Practices: Create Schedule Integrations Mindfully', manualPdfPage:190, verification:'verified'
   },
   {
     replaces:'gen-monitoring-06-03', categoryId:'monitoring', topic:'HTTP 503',
@@ -97,7 +97,7 @@ window.OIC_AUTHORED_QUESTIONS = [
       ['Target-side transaction evidence and an idempotent retry strategy','A 503 does not establish the transaction outcome; reconciliation and idempotency are necessary.'],
       ['Changing the Business Identifier to a random value','A tracking value does not resolve target availability or transaction status.'],
       ['Assuming the payment failed because the HTTP response was 503','The response alone does not prove whether the target committed the operation.']
-    ], correct:['B'], reference:'Troubleshooting REST connections and fault management'
+    ], correct:['B'], reference:'HTTP Semantics: Idempotent Methods and 503 Service Unavailable', referenceTitle:'RFC 9110: HTTP Semantics', referenceEdition:'June 2022', supplementalUrl:'https://www.rfc-editor.org/rfc/rfc9110.html#section-9.2.2', verification:'verified'
   },
   {
     replaces:'gen-monitoring-07-03', categoryId:'monitoring', topic:'Payload logging',
@@ -130,7 +130,7 @@ window.OIC_AUTHORED_QUESTIONS = [
       ['Whether the agent can bypass all existing payment controls','Bypassing controls increases business risk and is not justified by using an agent.'],
       ['Whether a prompt can be treated as a certified payment policy','A prompt alone is not a validated control or policy.'],
       ['Whether an OAuth client can replace the payment approver','OAuth grants access; it does not provide business authorization.']
-    ], correct:['A'], reference:'AI Innovation: Automate with Agentic AI'
+    ], correct:['A'], reference:'AI Innovation: Automate with Agentic AI', manualPdfPage:173, supplementalUrl:'https://docs.oracle.com/en/cloud/paas/application-integration/human-loop/human-loop-agentic-ai-oracle-integration.html', verification:'verified'
   },
   {
     replaces:'gen-started-08-03', categoryId:'started', topic:'Project migration',
@@ -197,13 +197,228 @@ window.OIC_AUTHORED_QUESTIONS = [
       ['A Business Identifier in place of Session Id','Business Identifiers track Integration instances and do not supply the RAG chat session.','Un Business Identifier en lugar de Session Id','Business Identifiers siguen instancias de Integration, no la sesión de chat RAG.'],
       ['A new knowledge base on every request','The agent endpoint supplies the knowledge base; replacing it does not resume a conversation.','Una knowledge base nueva en cada solicitud','El agent endpoint aporta la knowledge base; reemplazarla no reanuda la conversación.']
     ], correct:['A'], reference:'Add Actions to an Integration: Invoke Oracle Cloud Infrastructure Generative AI Agents RAG from an Integration', manualPdfPage:516, verification:'verified'
+  },
+  {
+    replaces:'gen-started-09-03', categoryId:'started', topic:'Project access control',
+    question:'A compliance team must grant one group permission to observe an automation solution without letting it edit every integration in the tenancy. Which design boundary supports that?',
+    questionEs:'Un equipo de cumplimiento debe permitir que un grupo observe una solución sin autorizarle a editar todas las integraciones de la tenancy. ¿Qué límite de diseño lo permite?',
+    options:[
+      ['Put the solution in a Project and assign the appropriate project role','Project RBAC controls who may edit, view, or monitor the contained solution.','Colocar la solución en un Project y asignar el rol de Project adecuado','Project RBAC controla quién puede editar, ver o monitorear la solución.'],
+      ['Give the group tenancy-wide administrator access','That is broader than the requested observation permission.','Dar al grupo acceso de administrador de toda la tenancy','Ese permiso es más amplio que la observación solicitada.'],
+      ['Create a Business Identifier for the group','Business Identifiers track message fields, not user permissions.','Crear un Business Identifier para el grupo','Business Identifiers siguen campos de mensajes; no conceden permisos de usuario.'],
+      ['Change the REST Adapter URL','An endpoint URL does not define role-based project access.','Cambiar el URL del REST Adapter','El URL de un endpoint no define acceso a Project por roles.']
+    ], correct:['A'], reference:'Get Started with Projects: About Projects - fine-grained access control', manualPdfPage:100, verification:'verified'
+  },
+  {
+    replaces:'gen-started-10-03', categoryId:'started', topic:'Business Identifier limit',
+    question:'An order Integration needs runtime search by order number and two additional fields. How many Business Identifiers can the designer define?',
+    questionEs:'Una Integration de pedidos necesita búsqueda en runtime por número de pedido y otros dos campos. ¿Cuántos Business Identifiers puede definir el diseñador?',
+    options:[
+      ['Up to three, with one designated as primary','The manual permits up to three and requires a primary field for tracking.','Hasta tres, con uno designado como primario','La documentación permite hasta tres y exige designar un campo primario para el seguimiento.'],
+      ['Exactly one, with no secondary fields','The manual allows two additional identifiers beyond the primary.','Exactamente uno, sin campos secundarios','La documentación permite dos identificadores adicionales al primario.'],
+      ['Unlimited identifiers for every payload field','The documented limit is three, not the entire payload.','Identificadores ilimitados para cada campo del payload','El límite documentado es tres, no todo el payload.'],
+      ['None, because Business Identifiers work only in design time','The Instances and Errors pages expose their runtime values.','Ninguno, porque Business Identifiers solo funcionan en design time','Las páginas Instances y Errors muestran sus valores en runtime.']
+    ], correct:['A'], reference:'Integration Concepts: About Business Identifiers for Tracking Fields in Messages', manualPdfPage:157, verification:'verified'
+  },
+  {
+    replaces:'gen-connections-09-03', categoryId:'connections', topic:'Connectivity Agent group size',
+    question:'A team plans four on-premises Connectivity Agents in one agent group. What does the documented group limit require?',
+    questionEs:'Un equipo planea cuatro Connectivity Agents on-premises en un solo agent group. ¿Qué exige el límite documentado del grupo?',
+    options:[
+      ['Redesign the grouping because one agent group supports up to two agents','The manual states that each agent group supports at most two agents.','Rediseñar los grupos porque uno admite hasta dos agents','La documentación indica que cada agent group admite como máximo dos agents.'],
+      ['Keep all four because there is no per-group limit','The manual specifies a two-agent per-group limit.','Mantener los cuatro porque no hay límite por grupo','La documentación establece un límite de dos agents por grupo.'],
+      ['Replace the agents with four Business Identifiers','Tracking fields do not provide private-network connectivity.','Sustituir los agents por cuatro Business Identifiers','Los campos de seguimiento no proporcionan conectividad con la red privada.'],
+      ['Install every agent in the browser','The on-premises agent runs in the private environment, not a browser extension.','Instalar todos los agents en el navegador','El on-premises agent se ejecuta en el entorno privado, no como extensión del navegador.']
+    ], correct:['A'], reference:'Understand Hybrid Integrations: About the Connectivity Agent', manualPdfPage:124, verification:'verified'
+  },
+  {
+    replaces:'gen-connections-10-03', categoryId:'connections', topic:'Connection test interpretation',
+    question:'A REST Adapter Connection test succeeds, but the first order fails because the target rejects a mapped field. What did the test establish?',
+    questionEs:'Un Connection test de REST Adapter pasa, pero el primer pedido falla porque el destino rechaza un campo mapeado. ¿Qué comprobó la prueba?',
+    options:[
+      ['The Connection configuration passed its test, not that every business payload is valid','The documented test result concerns Connection configuration; mapping and target contract need separate validation.','La configuración de Connection pasó su prueba, no que todo payload comercial sea válido','El resultado documentado se refiere a la configuración; el mapeo y contrato del destino requieren validación aparte.'],
+      ['Every future target payload is guaranteed valid','A Connection test does not execute every mapping or business-data case.','Que todo payload futuro del destino está garantizado','Un Connection test no ejecuta todos los casos de mapeo ni de datos comerciales.'],
+      ['The Integration was activated automatically','Testing a Connection does not activate an Integration.','Que la Integration se activó automáticamente','Probar una Connection no activa una Integration.'],
+      ['The target ignored schema validation','A successful configuration test says nothing about the target rejecting a later mapped field.','Que el destino omitió la validación del esquema','Una prueba de configuración correcta no explica el rechazo posterior de un campo mapeado.']
+    ], correct:['A'], reference:'Create Connections: Test the Connection', manualPdfPage:397, verification:'verified'
+  },
+  {
+    replaces:'gen-orchestration-09-03', categoryId:'orchestration', topic:'Parallel branch limit',
+    question:'A design proposes six independent supplier calls inside one Parallel action. Which constraint changes that design?',
+    questionEs:'Un diseño propone seis llamadas independientes a proveedores dentro de una sola Parallel action. ¿Qué restricción cambia el diseño?',
+    options:[
+      ['One Parallel action permits at most five branches','The sixth branch cannot be added to that Parallel action.','Una Parallel action admite como máximo cinco ramas','No se puede agregar una sexta rama a esa Parallel action.'],
+      ['Parallel permits only one branch','The action supports multiple branches, up to the documented limit.','Parallel permite solo una rama','La action admite varias ramas hasta el límite documentado.'],
+      ['Parallel is prohibited in application integrations','The manual supports Parallel in both application and schedule integrations.','Parallel está prohibido en application integrations','La documentación admite Parallel en application y schedule integrations.'],
+      ['Six branches are required for every Parallel action','The limit is a maximum, not a minimum.','Toda Parallel action requiere seis ramas','El límite es un máximo, no un mínimo.']
+    ], correct:['A'], reference:'Add Actions to an Integration: Process Tasks in Parallel - Guidelines and Restrictions', manualPdfPage:531, verification:'verified'
+  },
+  {
+    replaces:'gen-orchestration-10-03', categoryId:'orchestration', topic:'Stage File whole-file limit',
+    question:'A Stage File action must read a 14 MB file. Why is Read Entire File the wrong operation?',
+    questionEs:'Una Stage File action debe leer un archivo de 14 MB. ¿Por qué Read Entire File es la operación incorrecta?',
+    options:[
+      ['Its documented file-size limit is less than 10 MB; use Read File in Segments for larger files','The file exceeds the Read Entire File limit and requires the segmented operation.','Su límite documentado es menor de 10 MB; para archivos mayores se usa Read File in Segments','El archivo supera el límite de Read Entire File y requiere la operación segmentada.'],
+      ['Stage File cannot process any file larger than 10 MB','The manual specifically directs larger files to Read File in Segments.','Stage File no puede procesar ningún archivo mayor de 10 MB','La documentación dirige los archivos mayores a Read File in Segments.'],
+      ['Only a Business Identifier can raise the read limit','A tracking field does not change file-read limits.','Solo un Business Identifier puede aumentar el límite','Un campo de seguimiento no cambia los límites de lectura de archivos.'],
+      ['The file must be renamed to XML before reading','Changing the extension does not change the operation limit or parse the content.','Debe renombrarse el archivo a XML antes de leerlo','Cambiar la extensión no modifica el límite ni analiza el contenido.']
+    ], correct:['A'], reference:'Add Actions to an Integration: Configure Stage File Operations - Read Entire File', manualPdfPage:451, verification:'verified'
+  },
+  {
+    replaces:'gen-scheduled-09-03', categoryId:'scheduled', topic:'Scheduler resource contention',
+    question:'A Scheduled Integration routinely runs for more than an hour and later schedules wait to start. Which redesign does Oracle recommend when many schedules are required?',
+    questionEs:'Una Scheduled Integration suele durar más de una hora y los schedules posteriores esperan para iniciar. ¿Qué rediseño recomienda Oracle cuando hacen falta muchos schedules?',
+    options:[
+      ['Use a short Scheduled Integration to invoke an application Integration asynchronously','The scheduler can release its resource promptly while the long work continues in the child Integration.','Usar una Scheduled Integration breve que invoque de forma asíncrona una application Integration','El planificador libera su recurso pronto mientras el trabajo largo continúa en la Integration hija.'],
+      ['Keep all long work inside the scheduled parent','Long schedule runs occupy scheduler resources and can delay other starts.','Mantener todo el trabajo largo dentro del schedule principal','Las ejecuciones largas ocupan recursos del planificador y pueden retrasar otros inicios.'],
+      ['Start all schedules at the same second','A cluster of starts increases scheduler contention.','Iniciar todos los schedules en el mismo segundo','Agrupar los inicios aumenta la contención del planificador.'],
+      ['Replace scheduling with a Business Identifier','A tracking field cannot launch or distribute work.','Reemplazar la programación por un Business Identifier','Un campo de seguimiento no puede iniciar ni distribuir trabajo.']
+    ], correct:['A'], reference:'Best Practices: Create Schedule Integrations Mindfully', manualPdfPage:190, verification:'verified'
+  },
+  {
+    replaces:'gen-scheduled-10-03', categoryId:'scheduled', topic:'Project future runs calendar',
+    question:'A release manager wants to see all future scheduled runs across a Project. Which project view provides that calendar?',
+    questionEs:'Un responsable de despliegue quiere ver todas las ejecuciones programadas futuras de un Project. ¿Qué vista del Project muestra ese calendario?',
+    options:[
+      ['Observe > Future runs','This view shows the calendar of future runs for schedules that have started in the Project.','Observe > Future runs','Esta vista muestra el calendario de ejecuciones futuras de los schedules iniciados en el Project.'],
+      ['Design > Map Editor','Map Editor defines transformations rather than a future-run calendar.','Design > Map Editor','Map Editor define transformaciones, no el calendario de ejecuciones futuras.'],
+      ['Connections > Certificates','Certificates manage security material, not schedule timing.','Connections > Certificates','Certificates administra material de seguridad, no horarios de ejecución.'],
+      ['Observe > Subscriptions','Subscriptions shows event subscriptions, not the schedule-run calendar.','Observe > Subscriptions','Subscriptions muestra suscripciones a eventos, no el calendario de schedules.']
+    ], correct:['A'], reference:'Monitor Integrations in a Project: View the Schedule Integration Runs Calendar in a Project', manualPdfPage:342, verification:'verified'
+  },
+  {
+    replaces:'gen-monitoring-09-03', categoryId:'monitoring', topic:'Resubmit attempt limit',
+    question:'An operator has repeatedly resubmitted the same recoverable failed instance. What maximum number of resubmissions does Oracle document for one instance?',
+    questionEs:'Un operador ha ejecutado Resubmit varias veces sobre la misma instancia fallida recuperable. ¿Qué máximo documenta Oracle para una instancia?',
+    options:[
+      ['Ten','The manual states a maximum of ten resubmissions per instance.','Diez','La documentación establece un máximo de diez Resubmit por instancia.'],
+      ['One','The documented maximum is higher than one.','Uno','El máximo documentado es mayor que uno.'],
+      ['Unlimited','Oracle sets a finite maximum.','Ilimitado','Oracle establece un máximo finito.'],
+      ['Exactly fifty','Fifty is the practice-exam question count per category, not the resubmission limit.','Exactamente cincuenta','Cincuenta es la cantidad de preguntas por categoría en esta aplicación, no el límite de Resubmit.']
+    ], correct:['A'], reference:'Manage Errors: Resubmit Failed Messages', manualPdfPage:804, verification:'verified'
+  },
+  {
+    replaces:'gen-monitoring-10-03', categoryId:'monitoring', topic:'Discard versus resubmit',
+    question:'Support wants to preserve the ability to Resubmit a recoverable failed message tomorrow. What must they avoid today?',
+    questionEs:'Soporte quiere conservar la posibilidad de ejecutar Resubmit mañana para un mensaje fallido recuperable. ¿Qué debe evitar hoy?',
+    options:[
+      ['Discarding that message','The manual warns that a discarded message cannot later be resubmitted.','Descartar ese mensaje','La documentación advierte que un mensaje descartado no puede enviarse de nuevo con Resubmit.'],
+      ['Inspecting the Errors page','Inspecting errors helps diagnosis and does not itself discard the message.','Inspeccionar la página Errors','Inspeccionar errores ayuda al diagnóstico y no descarta el mensaje.'],
+      ['Reading its Business Identifier','A tracking value helps locate the instance and does not remove it.','Leer su Business Identifier','El valor de seguimiento ayuda a localizar la instancia y no la elimina.'],
+      ['Downloading the activity stream','Downloading diagnostic evidence is different from discarding the instance.','Descargar el activity stream','Descargar evidencia diagnóstica no equivale a descartar la instancia.']
+    ], correct:['A'], reference:'Manage Errors: Resubmit Failed Messages', manualPdfPage:804, verification:'verified'
+  },
+  {
+    replaces:'gen-ai-09-03', categoryId:'ai', topic:'RAG request mapping',
+    question:'A Generative AI Agents RAG Action is configured but receives no question text. Which mapper link is required to pass the user question?',
+    questionEs:'Una Generative AI Agents RAG Action está configurada, pero no recibe el texto de la pregunta. ¿Qué enlace del mapper transmite la consulta?',
+    options:[
+      ['Source User Prompt to target User Message','The manual specifies this mapping for the question or request in the payload body.','Source User Prompt hacia target User Message','La documentación especifica ese mapeo para la pregunta o solicitud del payload.'],
+      ['Source Business Identifier to target Session Id','Session Id controls conversation continuity; it is not the user question.','Source Business Identifier hacia target Session Id','Session Id controla la continuidad de la conversación; no es la pregunta del usuario.'],
+      ['Source File Name to target Region','Region is selected in configuration and a file name is not the prompt.','Source File Name hacia target Region','Region se elige en la configuración y el nombre de archivo no es el prompt.'],
+      ['No mapping because the action invents a question','The action needs the request text supplied in User Message.','Ningún mapeo porque la action inventa una pregunta','La action necesita recibir el texto de la solicitud en User Message.']
+    ], correct:['A'], reference:'Add Actions to an Integration: Invoke Oracle Cloud Infrastructure Generative AI Agents RAG from an Integration', manualPdfPage:516, verification:'verified'
+  },
+  {
+    replaces:'gen-ai-10-03', categoryId:'ai', topic:'RAG stream configuration',
+    question:'During the mapper setup for the documented OCI Generative AI Agents RAG Action, which value should be assigned to target Should Stream?',
+    questionEs:'Durante la configuración del mapper de la OCI Generative AI Agents RAG Action documentada, ¿qué valor debe asignarse a target Should Stream?',
+    options:[
+      ['false','The documented configuration sets target Should Stream to false in the expression builder.','false','La configuración documentada establece target Should Stream en false mediante el expression builder.'],
+      ['true for every integration','The documented steps do not require true; they explicitly say false.','true para toda Integration','Los pasos documentados no exigen true; indican expresamente false.'],
+      ['The previous Session Id','Session Id is a separate mapper input for continuing a conversation.','El Session Id anterior','Session Id es otra entrada del mapper para continuar una conversación.'],
+      ['The agent endpoint URL','The endpoint is chosen in the action configuration, not as a Boolean Should Stream value.','El URL del agent endpoint','El endpoint se selecciona en la configuración de la action; no es un valor Boolean de Should Stream.']
+    ], correct:['A'], reference:'Add Actions to an Integration: Invoke Oracle Cloud Infrastructure Generative AI Agents RAG from an Integration', manualPdfPage:516, verification:'verified'
   }
 ].map(item=>({
   id:item.replaces,categoryId:item.categoryId,topic:item.topic,question:item.question,questionEs:item.questionEs,
   options:item.options.map(([text,why,textEs,whyEs],i)=>({id:String.fromCharCode(65+i),text,textEs:textEs||null,correct:item.correct.includes(String.fromCharCode(65+i)),why,whyEs:whyEs||null})),
-  correct:item.correct,multi:false,difficulty:'professional',type:'scenario',
+  correct:item.correct,multi:false,difficulty:/-(09|10)-/.test(item.replaces)?'expert':'professional',type:/-(09|10)-/.test(item.replaces)?'expert':'scenario',
   source:'Original editorial practice',sourceType:'original',verification:item.verification||'editorial draft',
-  reference:{title:'Oracle Cloud Using Integrations in Oracle Integration 3',edition:'G36915-54, October 2026',section:item.reference,pdfPage:item.manualPdfPage||null,supplementalUrl:item.supplementalUrl||null,status:item.verification==='verified'?'item-level verified':'section pointer; item-level review pending'},
+  reference:{title:item.referenceTitle||'Oracle Cloud Using Integrations in Oracle Integration 3',edition:item.referenceEdition||'G36915-54, October 2026',section:item.reference,pdfPage:item.manualPdfPage||null,url:item.manualPdfPage?null:item.supplementalUrl||null,supplementalUrl:item.supplementalUrl||null,status:item.verification==='verified'?'item-level verified':'section pointer; item-level review pending'},
   explanation:item.options.find((_,i)=>item.correct.includes(String.fromCharCode(65+i)))?.[1],
   createdFor:'OIC Certification Academy 2026'
 }));
+
+/* Individually translated option text and feedback for the first editorial batch. */
+const OIC_EDITORIAL_SPANISH = {
+  'gen-started-06-03':[
+    ['Una solicitud síncrona que mantenga esperando a la tienda hasta terminar la preparación','Esto acopla un proceso largo al tiempo disponible para responder al cliente.'],
+    ['Un diseño asíncrono que acuse recibo y permita seguir la preparación después','El cliente recibe un acuse oportuno mientras la preparación continúa y se monitorea.'],
+    ['Un Connection test que confirme que el pedido ya se preparó','Un Connection test comprueba la configuración, no la finalización de una transacción comercial.'],
+    ['Una Integration solo de mapeo y sin seguimiento operativo','El mapeo por sí solo no define el patrón de interacción ni aporta evidencia para la recuperación.']
+  ],
+  'gen-started-07-03':[
+    ['Un Project para los recursos de integración relacionados','Projects organizan recursos relacionados y ofrecen flujos de diseño, despliegue y observación.'],
+    ['Un único Trust Certificate como espacio de trabajo','Un certificado aporta material de confianza; no agrupa diseños de Integration.'],
+    ['Una Invoke Connection en lugar de cada Integration','Invoke llama a un destino; no contiene la orquestación del equipo.'],
+    ['Un Business Identifier como contenedor de despliegue','Business Identifier sirve para seguimiento, no para organizar recursos.']
+  ],
+  'gen-connections-06-03':[
+    ['Authorization Code, porque todo token exige un usuario en el navegador','Authorization Code se basa en la autorización y redirección de un usuario.'],
+    ['Client Credentials, si el proveedor de API lo admite','Client Credentials es un flujo entre servicios sin autorización interactiva de un usuario.'],
+    ['Un Business Identifier, porque es un access token','Business Identifiers son campos de seguimiento, no flujos OAuth.'],
+    ['Solo un TLS Trust Certificate, porque concede autorización de API','La confianza TLS no sustituye la política de autorización OAuth de la API.']
+  ],
+  'gen-connections-07-03':[
+    ['Client Credentials sin contexto de usuario','Client Credentials representa a la aplicación cliente, no al usuario que autoriza.'],
+    ['Authorization Code con el flujo de redirección del proveedor','Authorization Code incorpora autorización explícita del usuario e intercambio mediante redirección.'],
+    ['Autenticación SFTP con contraseña','Las credenciales SFTP no expresan la autorización OAuth delegada por el usuario.'],
+    ['Un schedule parameter que contenga la contraseña del usuario','Un schedule parameter no es un flujo OAuth ni un sustituto seguro del consentimiento.']
+  ],
+  'gen-orchestration-06-03':[
+    ['¿Puede cambiar la condición del bucle y existe un límite de terminación?','While necesita una condición que cambie o un límite explícito para evitar una ejecución interminable.'],
+    ['¿Hará Parallel que cada consulta termine secuencialmente?','Parallel sirve para ramas independientes concurrentes, no para controlar la terminación.'],
+    ['¿Puede un certificado volver falsa la condición automáticamente?','Los certificados aportan material de seguridad, no administran el estado del bucle.'],
+    ['¿Debe omitirse el manejo de fallos durante las consultas?','La consulta repetida también necesita tratamiento de fallos y tiempos de espera.']
+  ],
+  'gen-orchestration-07-03':[
+    ['Ramas Parallel para los Invoke independientes, con comparación de resultados y Global Fault Handler','La documentación usa Parallel para llamadas independientes y permite capturar fallos a nivel de Integration.'],
+    ['Un For Each sobre un solo registro de cliente','For Each repite elementos del payload; no proporciona concurrencia entre servicios independientes.'],
+    ['Un único Assign en lugar de ambas llamadas','Assign establece variables; no obtiene las respuestas de impuestos e inventario.'],
+    ['Dos Invoke dependientes que asumen que el segundo necesita la salida del primero','El caso no presenta esa dependencia y la serialización sería innecesaria.']
+  ],
+  'gen-scheduled-06-03':[
+    ['Un REST Trigger que espere una solicitud HTTP del proveedor','El caso describe un archivo y una cadencia nocturna, no un cliente HTTP.'],
+    ['Una Scheduled Integration con FTP Adapter Connection y procesamiento Stage File','El schedule puede iniciar la descarga con FTP Adapter; Stage File procesa el archivo sin cliente entrante.'],
+    ['Un Business Identifier como protocolo de transferencia de archivos','Un campo de seguimiento no puede recuperar ni analizar un archivo.'],
+    ['Una sesión de Map Editor que se ejecute automáticamente a medianoche','Map Editor define mapeos; no es un planificador.']
+  ],
+  'gen-scheduled-07-03':[
+    ['Distribuir los horarios de inicio y evitar trabajos programados de larga duración','Oracle recomienda evitar grupos de schedules simultáneos y ejecuciones largas que ocupan recursos del planificador.'],
+    ['Mover todos los schedules al mismo minuto','Esto aumenta la contención que retrasa los inicios programados.'],
+    ['Aumentar la frecuencia de todos los schedules a una vez por minuto','Las ejecuciones más frecuentes pueden aumentar la acumulación de trabajos.'],
+    ['Desactivar Observability para liberar capacidad del planificador','La documentación no identifica el monitoreo como causa ni solución de esa contención.']
+  ],
+  'gen-monitoring-06-03':[
+    ['Reintentos paralelos ilimitados e inmediatos','Los reintentos sin límite pueden agravar la interrupción y duplicar el pago.'],
+    ['Evidencia de la transacción en el destino y una estrategia de reintento idempotente','Un 503 no confirma el resultado de la transacción; hacen falta conciliación e idempotencia.'],
+    ['Cambiar el Business Identifier por un valor aleatorio','Un campo de seguimiento no resuelve la disponibilidad ni el estado de la transacción en el destino.'],
+    ['Suponer que el pago falló porque la respuesta HTTP fue 503','La respuesta por sí sola no demuestra si el destino confirmó la operación.']
+  ],
+  'gen-monitoring-07-03':[
+    ['Activar el registro irrestricto permanentemente para acelerar investigaciones futuras','Registrar todo permanentemente puede exponer datos sensibles y vulnerar controles de retención.'],
+    ['Usar tracing temporal solo cuando esté permitido, con controles de acceso y retención','Oracle advierte que el tracing de payload afecta el rendimiento y puede almacenar datos sensibles contra las reglas de retención.'],
+    ['Eliminar Business Identifiers para que no se encuentre ninguna transacción','Quitar el seguimiento dificulta el soporte y no controla por sí solo el registro de payload.'],
+    ['Poner credenciales de servicio en el payload para correlacionar registros','Las credenciales no deben colocarse en payloads comerciales ni en registros.']
+  ],
+  'gen-ai-06-03':[
+    ['Seleccionar un agent endpoint con knowledge base aprobada en una región y compartment disponibles y revisar las respuestas','La RAG action usa un agent endpoint que contiene la knowledge base; región y compartment deben mostrarlo.'],
+    ['Enviar todos los documentos en cada prompt sin comprobar accesos','Esto elude permisos documentales y expone datos innecesariamente.'],
+    ['Sustituir el repositorio documental por una contraseña SFTP','Una credencial de transferencia no es una fuente de recuperación gobernada.'],
+    ['Suponer que RAG demuestra que toda respuesta es correcta','El contexto recuperado no garantiza la exactitud de cada respuesta.']
+  ],
+  'gen-ai-07-03':[
+    ['Disponibilidad de la función, permisos, controles y un límite de aprobación humana','Las acciones de alto impacto exigen comprobar disponibilidad, mínimo privilegio y control humano explícito.'],
+    ['Si el agente puede eludir todos los controles de pago existentes','Eludir controles aumenta el riesgo comercial y el uso de un agente no lo justifica.'],
+    ['Si un prompt puede considerarse una política de pago certificada','Un prompt por sí solo no es una política ni un control validado.'],
+    ['Si un cliente OAuth puede reemplazar al aprobador de pagos','OAuth concede acceso; no proporciona aprobación comercial.']
+  ]
+};
+for (const item of window.OIC_AUTHORED_QUESTIONS) {
+  const translations = OIC_EDITORIAL_SPANISH[item.id];
+  if (!translations) continue;
+  item.options.forEach((option,index) => {
+    [option.textEs,option.whyEs] = translations[index];
+  });
+}
