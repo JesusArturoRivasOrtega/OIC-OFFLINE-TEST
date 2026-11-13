@@ -1,7 +1,7 @@
 import {readFileSync} from 'node:fs';
 import vm from 'node:vm';
 const context={window:{},Date,Math};vm.createContext(context);
-for(const file of ['data.js','study-engine.js'])vm.runInContext(readFileSync(new URL(`../${file}`,import.meta.url),'utf8'),context);
+for(const file of ['rationales.js','data.js','study-engine.js'])vm.runInContext(readFileSync(new URL(`../${file}`,import.meta.url),'utf8'),context);
 const D=context.window.OIC_DATA,E=context.window.OIC_ENGINE;
 const assert=(condition,message)=>{if(!condition)throw new Error(message)};
 const multi=D.questions.find(q=>q.multi);
