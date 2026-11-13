@@ -1,4 +1,4 @@
-const CACHE = 'oic-academy-v13';
+const CACHE = 'oic-academy-v14';
 const ASSETS = ['./','./index.html','./styles.css','./feedback.css','./rationales.js','./authored-questions.js','./data.js','./study-engine.js','./guided-labs.js','./case-analysis.js','./curriculum.js','./curriculum-depth.js','./curriculum-workbook.js','./app.js','./manifest.webmanifest','./assets/oic-academy.svg','./assets/oic-academy-180.png','./assets/oic-academy-192.png','./assets/oic-academy-512.png'];
 self.addEventListener('install', event => event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(ASSETS)).then(() => self.skipWaiting())));
 self.addEventListener('activate', event => event.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(key => key !== CACHE).map(key => caches.delete(key)))).then(() => self.clients.claim())));
