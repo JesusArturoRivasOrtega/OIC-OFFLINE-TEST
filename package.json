@@ -3,5 +3,5 @@
   "private": true,
   "version": "1.0.0",
   "description": "Offline static PWA for OIC study.",
-  "scripts": {"test": "node tests/validate-data.mjs"}
+  "scripts": {"test": "node tests/validate-data.mjs && node tests/study-engine.mjs"}
 }

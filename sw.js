@@ -1,5 +1,5 @@
-const CACHE = 'oic-academy-v1';
-const ASSETS = ['./','./index.html','./styles.css','./data.js','./app.js','./manifest.webmanifest','./assets/oic-academy.svg'];
+const CACHE = 'oic-academy-v3';
+const ASSETS = ['./','./index.html','./styles.css','./data.js','./study-engine.js','./guided-labs.js','./curriculum.js','./app.js','./manifest.webmanifest','./assets/oic-academy.svg','./assets/oic-academy-180.png','./assets/oic-academy-192.png','./assets/oic-academy-512.png'];
 self.addEventListener('install', event => event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(ASSETS)).then(() => self.skipWaiting())));
 self.addEventListener('activate', event => event.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(key => key !== CACHE).map(key => caches.delete(key)))).then(() => self.clients.claim())));
 self.addEventListener('fetch', event => {
