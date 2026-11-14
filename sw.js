@@ -1,4 +1,4 @@
-const CACHE = 'oic-academy-v24';
+const CACHE = 'oic-academy-v25';
 const CACHE_PREFIX = 'oic-academy-';
 const ASSETS = ['./','./index.html','./styles.css','./feedback.css','./rationales.js','./authored-questions.js','./question-translations.js','./question-references.js','./data.js','./study-engine.js','./guided-labs.js','./case-analysis.js','./curriculum.js','./curriculum-depth.js','./curriculum-workbook.js','./app.js','./manifest.webmanifest','./assets/oic-academy.svg','./assets/oic-academy-180.png','./assets/oic-academy-192.png','./assets/oic-academy-512.png'];
 self.addEventListener('install', event => event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(ASSETS)).then(() => self.skipWaiting())));

@@ -27,7 +27,7 @@ for(const q of questions.filter(q=>q.source==='Generated practice'))if(!q.refere
 const generated=questions.filter(q=>q.source==='Generated practice'),keyCounts=Object.fromEntries(['A','B','C','D','E'].map(id=>[id,generated.filter(q=>q.correct.includes(id)).length]));
 if(keyCounts.A<35||keyCounts.B<35||keyCounts.C<35||keyCounts.D<35||keyCounts.A>100)throw new Error(`Generated answer positions remain biased: ${JSON.stringify(keyCounts)}`);
 const authored=questions.filter(q=>q.source==='Original editorial practice');
-if(authored.length!==48)throw new Error('Expected 48 authored case replacements');
+if(authored.length!==52)throw new Error('Expected 52 authored case replacements');
 if(authored.some(q=>q.verification!=='verified'||q.reference.status!=='item-level verified'||!q.reference.pdfPage&&!q.reference.url))throw new Error('Every authored answer needs a verified item-level reference');
 if(authored.some(q=>!q.questionEs||q.options.some(o=>!o.textEs||!o.whyEs)))throw new Error('Every authored item needs full Spanish options and rationales');
 if(authored.some(q=>q.correct.some(id=>!q.options.some(o=>o.id===id&&o.correct))||q.options.some(o=>o.correct!==q.correct.includes(o.id))))throw new Error('Authored answer flags and correct IDs disagree');

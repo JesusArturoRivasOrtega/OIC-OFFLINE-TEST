@@ -527,6 +527,50 @@ window.OIC_AUTHORED_QUESTIONS = [
       ['Language detection','Oracle documents that Language detection returns the language and its confidence score from zero to one.','Language detection','Oracle documenta que Language detection devuelve el idioma y su puntuación de confianza entre cero y uno.'],
       ['Named entity recognition','Entity recognition finds names, places, and similar entities; it is not the action that reports detected language.','Named entity recognition','Entity recognition identifica nombres, lugares y entidades similares; no es la acción que informa el idioma detectado.']
     ],correct:['C'],reference:'Perform Text Analysis and Translation with a Language Action: Language detection',supplementalUrl:'https://docs.oracle.com/en/cloud/paas/application-integration/integrations-user/perform-text-analysis-translation-language-action.html',verification:'verified'
+  },
+  {
+    replaces:'gen-connections-10-01', categoryId:'connections', topic:'Dynamic REST endpoint restriction', type:'expert', difficulty:'expert',
+    question:'A REST Invoke currently connects through an OIC private endpoint. A developer proposes mapping AbsoluteEndpointUri at runtime to switch among target hosts. What should the design review conclude?',
+    questionEs:'Un REST Invoke se conecta mediante un private endpoint de OIC. Un desarrollador propone mapear AbsoluteEndpointUri en ejecución para alternar entre hosts destino. ¿Qué debe concluir la revisión del diseño?',
+    options:[
+      ['This is supported for any private endpoint if the host names share a domain','Oracle explicitly excludes dynamic REST endpoints when the connection uses a private endpoint.','Se admite en cualquier private endpoint si los hosts comparten dominio','Oracle excluye expresamente los endpoints REST dinámicos cuando la conexión usa un private endpoint.'],
+      ['Map a Business Identifier instead; it changes the target host at runtime','Business Identifiers are tracking fields, not REST connectivity overrides.','Mapear un Business Identifier; cambiará el host destino en ejecución','Business Identifiers son campos de seguimiento, no controles para cambiar la conectividad REST.'],
+      ['Do not use this dynamic-endpoint feature with a private endpoint; redesign the routing using supported connections','The REST Adapter documentation states that dynamic REST endpoints cannot be used through a private endpoint.','No usar esta función de endpoint dinámico con private endpoint; rediseñar la ruta con Connections admitidas','La documentación del REST Adapter indica que los endpoints REST dinámicos no pueden usarse mediante private endpoint.'],
+      ['Change the HTTP verb in ConnectivityProperties instead of the URI','The dynamic feature also does not permit changing the configured HTTP verb; this does not solve the private-endpoint restriction.','Cambiar el verbo HTTP en ConnectivityProperties en vez del URI','La función tampoco permite cambiar el verbo HTTP configurado y no resuelve la restricción del private endpoint.']
+    ],correct:['C'],reference:'REST Adapter: Support for Dynamic REST Endpoints, private-endpoint restriction',supplementalUrl:'https://docs.oracle.com/en/cloud/paas/application-integration/rest-adapter/support-dynamic-rest-endpoints.html',verification:'verified'
+  },
+  {
+    replaces:'gen-orchestration-09-01', categoryId:'orchestration', topic:'Parallel fault-handling boundary', type:'expert', difficulty:'expert',
+    question:'Two independent Invokes run in separate Parallel branches. The designer wants an independent fault handler inside each branch. Which statement matches the documented limitation?',
+    questionEs:'Dos Invokes independientes se ejecutan en ramas Parallel separadas. El diseñador quiere un manejador de fallos independiente dentro de cada rama. ¿Qué afirmación coincide con la limitación documentada?',
+    options:[
+      ['Each branch supports its own independent fault handler without restriction','Oracle explicitly says independent branch-specific fault handling is not supported.','Cada rama admite sin restricciones su propio manejador de fallos independiente','Oracle indica expresamente que no se admite el manejo independiente de fallos específico de cada rama.'],
+      ['Parallel branches cannot contain Invoke Connections','The supported actions list includes Invoke Connections in Parallel branches.','Las ramas Parallel no pueden contener Invoke Connections','La lista de acciones permitidas incluye Invoke Connections en las ramas Parallel.'],
+      ['Adding a sixth branch enables branch-specific handlers','Oracle limits one Parallel action to five branches, and more branches would not alter fault-handler support.','Agregar una sexta rama habilita manejadores específicos','Oracle limita una acción Parallel a cinco ramas; añadir ramas no cambiaría el soporte de fallos.'],
+      ['Independent branch-specific handlers are unsupported; plan integration-level handling such as a Global Fault Handler','Oracle lists this restriction and identifies the Global Fault Handler as an integration-level option.','No se admiten manejadores independientes por rama; planear manejo a nivel de Integration, como Global Fault Handler','Oracle enumera esa restricción y señala Global Fault Handler como alternativa a nivel de Integration.']
+    ],correct:['D'],reference:'Process Tasks in Parallel with a Parallel Action: Guidelines and Restrictions',supplementalUrl:'https://docs.oracle.com/en/cloud/paas/application-integration/integrations-user/process-tasks-parallel-parallel-action.html',verification:'verified'
+  },
+  {
+    replaces:'gen-monitoring-04-01', categoryId:'monitoring', topic:'HTTP 403 triage', type:'application', difficulty:'professional',
+    question:'A REST Invoke reaches the target API and receives HTTP 403 Forbidden. The target confirms the request was authenticated. Which check should support prioritize?',
+    questionEs:'Un REST Invoke llega a la API destino y recibe HTTP 403 Forbidden. El destino confirma que la solicitud fue autenticada. ¿Qué comprobación debe priorizar soporte?',
+    options:[
+      ['Check whether the authenticated principal has permission for that API operation','Oracle troubleshooting says a 403 usually implies insufficient API permissions; authentication alone does not establish authorization.','Comprobar si la identidad autenticada tiene permiso para esa operación de API','La guía de Oracle indica que 403 suele implicar falta de permisos de API; autenticarse no equivale a estar autorizado.'],
+      ['Change an unrelated Map expression before checking permissions','A Map change does not address the target authorization decision indicated by this response.','Cambiar una expresión Map no relacionada antes de revisar permisos','Un cambio de Map no resuelve la decisión de autorización del destino indicada por la respuesta.'],
+      ['Treat 403 as evidence that the target did not receive the request','The target returned the 403 response, so network reachability is not the immediate missing step.','Interpretar 403 como prueba de que el destino no recibió la solicitud','El destino devolvió 403, por lo que la conectividad no es la carencia inmediata.'],
+      ['Blindly retry the same request indefinitely','Repeated retries without changing authorization are unlikely to resolve a permission denial and can add load.','Reintentar ciegamente la misma solicitud sin límite','Reintentar sin corregir la autorización difícilmente resuelve la denegación de permisos y añade carga.']
+    ],correct:['A'],reference:'Troubleshoot Integration Runtime: HTTP 403 and API permissions',supplementalUrl:'https://docs.oracle.com/en/cloud/paas/application-integration/integrations-user/troubleshoot-integration-runtime.html',verification:'verified'
+  },
+  {
+    replaces:'gen-ai-05-01', categoryId:'ai', topic:'Semantic-search embeddings', type:'application', difficulty:'professional',
+    question:'A catalog search must compare short product descriptions by meaning rather than exact keywords. It needs numeric representations for similarity calculations, not prose answers. Which OCI Generative AI action fits?',
+    questionEs:'Una búsqueda de catálogo debe comparar descripciones breves de productos por significado y no por palabras exactas. Necesita representaciones numéricas para calcular similitud, no respuestas en prosa. ¿Qué acción de OCI Generative AI corresponde?',
+    options:[
+      ['Chat','Chat produces a text response to a prompt; the case requires numeric representations for semantic comparison.','Chat','Chat produce texto como respuesta a un prompt; el caso requiere representaciones numéricas para comparación semántica.'],
+      ['Rerank','Rerank scores and reorders supplied documents against a query; it is not the action that creates text embeddings.','Rerank','Rerank puntúa y reordena documentos según una consulta; no es la acción que crea embeddings de texto.'],
+      ['EmbedText','Oracle documents EmbedText as producing numeric text embeddings useful for semantic similarity and search.','EmbedText','Oracle documenta que EmbedText produce embeddings numéricos útiles para similitud y búsqueda semántica.'],
+      ['Document classification','Classification labels document types; it does not provide the requested numeric text vectors for similarity calculations.','Document classification','Classification etiqueta tipos de documentos; no proporciona los vectores numéricos requeridos para calcular similitud.']
+    ],correct:['C'],reference:'Generate, Embed, or Rerank Text with a Generative AI Action: EmbedText',supplementalUrl:'https://docs.oracle.com/en/cloud/paas/application-integration/integrations-user/generate-embed-or-rerank-text-generative-ai-action.html',verification:'verified'
   }
 ].map(item=>({
   id:item.replaces,categoryId:item.categoryId,topic:item.topic,question:item.question,questionEs:item.questionEs,
