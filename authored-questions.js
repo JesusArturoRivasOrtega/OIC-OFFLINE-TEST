@@ -395,6 +395,50 @@ window.OIC_AUTHORED_QUESTIONS = [
       ['Select Multi Key Authentication on the REST invoke Connection and map each required header to a security-header field','Oracle documents this policy for custom security headers set once on a REST invoke Connection and sent at runtime.','Seleccionar Multi Key Authentication en la Connection REST Invoke y vincular cada encabezado al campo de seguridad correspondiente','Oracle documenta esta política para encabezados de seguridad personalizados configurados en la Connection y enviados en ejecución.'],
       ['Add literal secrets to every mapper expression instead of configuring Connection security','Mapper expressions are not the documented connection-level security fields and would replicate sensitive values.','Añadir secretos literales a cada expresión del mapper en vez de configurar la seguridad de Connection','Las expresiones del mapper no son los campos de seguridad documentados y duplicarían valores sensibles.']
     ], correct:['C'], reference:'Specify Custom Header Security Values to Authenticate with Endpoint Applications: Multi Key Authentication', supplementalUrl:'https://docs.oracle.com/en/cloud/paas/application-integration/rest-adapter/use-custom-header-based-authentication.html', verification:'verified'
+  },
+  {
+    replaces:'gen-started-08-01', categoryId:'started', topic:'Integration version activation', type:'scenario', difficulty:'professional',
+    question:'A team needs to run its current integration version 1.00.0000 alongside a redesigned version. Which versioning choice preserves the ability to keep both active?',
+    questionEs:'Un equipo necesita ejecutar la versión actual 1.00.0000 de una Integration junto con una versión rediseñada. ¿Qué elección de versión permite mantener ambas activas?',
+    options:[
+      ['Create 1.10.0000 and activate it; a minor version keeps 1.00.0000 active','Oracle documents that activating the new minor version deactivates 1.00.0000.','Crear y activar 1.10.0000; una versión menor mantiene activa 1.00.0000','Oracle documenta que activar la nueva versión menor desactiva 1.00.0000.'],
+      ['Create 2.00.0000 as a new major version and activate it after testing','Oracle documents a new major version as the way to allow both versions to remain active.','Crear 2.00.0000 como nueva versión mayor y activarla después de probarla','Oracle documenta que una nueva versión mayor permite mantener activas ambas versiones.'],
+      ['Keep the same 1.00.0000 version number for the new draft','Oracle rejects a new version that retains the existing version number.','Conservar el mismo número 1.00.0000 para el nuevo borrador','Oracle rechaza una versión nueva que conserva el número existente.'],
+      ['Change only the Connection display name and skip integration versioning','Renaming a Connection does not create an independently active integration version.','Cambiar solo el nombre visible de la Connection y omitir el versionado','Renombrar una Connection no crea otra versión de Integration que pueda activarse por separado.']
+    ],correct:['B'],reference:'Create a Draft Version of an Integration: version activation behavior',supplementalUrl:'https://docs.oracle.com/en/cloud/paas/application-integration/integrations-user/create-draft-integration.html',verification:'verified'
+  },
+  {
+    replaces:'gen-scheduled-08-01', categoryId:'scheduled', topic:'Exact iCal minute', type:'scenario', difficulty:'professional',
+    question:'An iCal schedule must run at exactly 14:00 and 15:00 each day. The expression already has BYHOUR=14,15. Which extra component removes ambiguity about the minute?',
+    questionEs:'Un schedule iCal debe ejecutarse exactamente a las 14:00 y 15:00 cada día. La expresión ya contiene BYHOUR=14,15. ¿Qué componente adicional elimina la ambigüedad del minuto?',
+    options:[
+      ['BYMINUTE=0','Oracle recommends explicitly setting BYMINUTE=0 for exact hourly times; otherwise the start time can determine the minute.','BYMINUTE=0','Oracle recomienda indicar BYMINUTE=0 para horas exactas; de lo contrario, la hora de inicio puede determinar el minuto.'],
+      ['BYDAY=MO,FR','Weekday filtering does not set the minute to zero and would change which days run.','BYDAY=MO,FR','Filtrar días de la semana no fija el minuto en cero y cambiaría los días de ejecución.'],
+      ['INTERVAL=15','An interval changes recurrence spacing; it does not force both runs to the top of the hour.','INTERVAL=15','Un intervalo cambia la separación entre ejecuciones; no fija ambas al inicio de cada hora.'],
+      ['COUNT=0','A count is not the minute selector and would not express the required daily run times.','COUNT=0','Un contador no selecciona el minuto ni expresa las horas diarias requeridas.']
+    ],correct:['A'],reference:'Define the Integration Schedule: Understand How to Use iCal Expressions',supplementalUrl:'https://docs.oracle.com/en/cloud/paas/application-integration/integrations-user/define-integration-schedule.html',verification:'verified'
+  },
+  {
+    replaces:'gen-monitoring-08-01', categoryId:'monitoring', topic:'Synchronous failure recovery', type:'scenario', difficulty:'professional',
+    question:'An operator sees a failed synchronous REST request and wants to use Resubmit on that instance. What should the recovery plan say?',
+    questionEs:'Un operador ve una solicitud REST síncrona fallida y quiere usar Resubmit sobre esa instancia. ¿Qué debe indicar el plan de recuperación?',
+    options:[
+      ['Resubmit it automatically; all failed synchronous instances are recoverable','Oracle states that synchronous flows cannot be resubmitted.','Ejecutar Resubmit automáticamente; todas las instancias síncronas fallidas son recuperables','Oracle indica que los flujos síncronos no admiten Resubmit.'],
+      ['First discard it, then Resubmit the discarded instance','Discard is not a path to Resubmit and a discarded message cannot later be resubmitted.','Primero descartarla y después ejecutar Resubmit sobre la instancia descartada','Descartar no habilita Resubmit; un mensaje descartado no puede reenviarse así.'],
+      ['Diagnose the error and have the caller issue a new request if retry is safe','A synchronous instance cannot be resubmitted; a fresh request requires a separate retry decision and duplicate-effect check.','Diagnosticar el error y pedir al cliente una solicitud nueva si es seguro repetirla','Una instancia síncrona no admite Resubmit; una solicitud nueva exige evaluar el reintento y los posibles efectos duplicados.'],
+      ['Change a Business Identifier to make the failed request asynchronous','A tracking field does not change the integration interaction style or recovery rule.','Cambiar un Business Identifier para volver asíncrona la solicitud fallida','Un campo de seguimiento no cambia el estilo de interacción ni la regla de recuperación.']
+    ],correct:['C'],reference:'Resubmit Failed Messages: synchronous flows cannot be resubmitted',supplementalUrl:'https://docs.oracle.com/en/cloud/paas/application-integration/integrations-user/resubmit-failed-messages.html',verification:'verified'
+  },
+  {
+    replaces:'gen-ai-08-01', categoryId:'ai', topic:'Document table extraction', type:'scenario', difficulty:'professional',
+    question:'An English PDF receipt contains an itemized table. Downstream logic needs the row and column relationships, not just a flat transcript. Which Document Understanding feature should be configured?',
+    questionEs:'Un recibo PDF en inglés contiene una tabla de artículos. La lógica posterior necesita la relación entre filas y columnas, no solo texto plano. ¿Qué función de Document Understanding debe configurarse?',
+    options:[
+      ['Text extraction alone','Text extraction returns words and lines, but does not by itself provide the table cell relationships requested.','Solo Text extraction','Text extraction devuelve palabras y líneas, pero por sí sola no aporta las relaciones entre celdas solicitadas.'],
+      ['Document classification alone','Classification identifies a document type; it does not extract the receipt table structure.','Solo Document classification','Classification identifica el tipo de documento; no extrae la estructura de la tabla del recibo.'],
+      ['OCI Speech transcription','Speech transcribes audio, while the source here is a PDF table.','Transcripción con OCI Speech','Speech transcribe audio, mientras que la fuente aquí es una tabla en PDF.'],
+      ['Table extraction','Oracle documents table extraction for receipts, returning rows, columns, and cell content; the pretrained feature is English-only.','Table extraction','Oracle documenta la extracción de tablas en recibos y devuelve filas, columnas y contenido de celdas; la función preentrenada admite inglés.']
+    ],correct:['D'],reference:'Document Understanding: Table Extraction',supplementalUrl:'https://docs.oracle.com/en-us/iaas/Content/document-understanding/using/pretrained_doc_table_extraction.htm',verification:'verified'
   }
 ].map(item=>({
   id:item.replaces,categoryId:item.categoryId,topic:item.topic,question:item.question,questionEs:item.questionEs,
