@@ -19,6 +19,8 @@ The repository deliberately excludes the supplied Udemy PDFs, 2024 notes, Oracle
 
 Scored practice, Quick Challenge, Weakness Trainer, and mock exams now draw only from verified cases. Provisional records stay visible in the Source Verification Center but do not affect scores or current mastery metrics. Existing local answer history is retained; entries for still-provisional cases are omitted from current metrics.
 
+The Integration lifecycle and Scheduled parameters readings now include four additional bilingual, source-linked sections each. These expansions do not yet constitute a completed point-by-point editorial audit of all 41 chapters.
+
 Private extracts are kept outside the repository: 272 OCR candidate questions from the supplied PDFs and 66 candidate study questions from the 2024 notes. Proposed answers from notes are **not verified** and no private question is used for scored public practice.
 
 Use **Settings → Import private question set** to keep question material you are authorized to use in your own browser. The app never uploads an imported file. A private JSON collection should contain a `questions` array; each question needs at least `id`, `categoryId`, `question`, `options`, `correct`, `source`, and `verification`. Unverified OCR questions with no confirmed answer can be imported into the review queue but are excluded from scored sessions.
