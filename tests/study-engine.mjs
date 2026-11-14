@@ -1,9 +1,13 @@
 import {readFileSync} from 'node:fs';
 import vm from 'node:vm';
 const context={window:{},Date,Math};vm.createContext(context);
-for(const file of ['rationales.js','question-references.js','data.js','reviewed-48.js','reviewed-6.js','study-engine.js'])vm.runInContext(readFileSync(new URL(`../${file}`,import.meta.url),'utf8'),context);
+for(const file of ['rationales.js','authored-questions.js','question-translations.js','question-references.js','data.js','reviewed-48.js','reviewed-6.js','study-engine.js'])vm.runInContext(readFileSync(new URL(`../${file}`,import.meta.url),'utf8'),context);
 const D=context.window.OIC_DATA,E=context.window.OIC_ENGINE;
 const assert=(condition,message)=>{if(!condition)throw new Error(message)};
+const verifiedPool=E.scoredPool(D.questions);
+assert(verifiedPool.length===106&&verifiedPool.every(q=>q.verification==='verified'),'Scored sessions must exclude every provisional public item');
+const verifiedExam=E.examDistribution(verifiedPool,E.createRng(20261114));
+assert(verifiedExam.length===50&&verifiedExam.every(q=>q.verification==='verified'),'Verified cases must fill the weighted exam');
 const multi=D.questions.find(q=>q.multi);
 assert(multi,'Expected at least one multi-answer question');
 assert(E.score(multi,multi.correct),'Multiple-answer scoring should accept exactly the correct set');

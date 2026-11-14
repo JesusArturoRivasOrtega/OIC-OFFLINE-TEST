@@ -28,6 +28,9 @@ window.OIC_ENGINE = (() => {
     const expected=[...question.correct].sort();const actual=[...selected].sort();
     return expected.length===actual.length&&expected.every((id,i)=>id===actual[i]);
   }
+  function scoredPool(questions){
+    return questions.filter(q=>q?.verification==='verified'&&Array.isArray(q.correct)&&q.correct.length>0);
+  }
   function normalizeImportedQuestion(question,sourceName='Imported JSON'){
     if(!question||typeof question.id!=='string'||typeof question.categoryId!=='string'||typeof question.question!=='string'||!Array.isArray(question.options)||!Array.isArray(question.correct))return null;
     const ids=new Set(question.options.map(option=>option.id));
@@ -57,5 +60,5 @@ window.OIC_ENGINE = (() => {
     const score=Math.round(correct/rows.length*100);
     return {date:Date.now(),level:session.level,score,correct,total:rows.length,answered:rows.filter(r=>r.answered).length,seconds:Math.round((Date.now()-session.started)/1000),byCategory,missed:rows.filter(r=>!r.correct),previousScore:previous.at(-1)?.score??null};
   }
-  return {grade,selection,score,examDistribution,examReport,createRng,shuffle,normalizeImportedQuestion};
+  return {grade,selection,score,scoredPool,examDistribution,examReport,createRng,shuffle,normalizeImportedQuestion};
 })();

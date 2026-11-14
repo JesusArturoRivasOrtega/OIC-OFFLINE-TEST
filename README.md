@@ -17,6 +17,8 @@ An offline-first, static Progressive Web App for studying Oracle Integration 3 c
 
 The repository deliberately excludes the supplied Udemy PDFs, 2024 notes, Oracle documentation, and all OCR output. The public bank has 106 original bilingual scenarios with item-level answer, option-rationale, and reference checks; the remaining 194 are provisional concept variations and are not individually verified questions. The questions do not reproduce Oracle documentation or represent an official Oracle certification question bank.
 
+Scored practice, Quick Challenge, Weakness Trainer, and mock exams now draw only from verified cases. Provisional records stay visible in the Source Verification Center but do not affect scores or current mastery metrics. Existing local answer history is retained; entries for still-provisional cases are omitted from current metrics.
+
 Private extracts are kept outside the repository: 272 OCR candidate questions from the supplied PDFs and 66 candidate study questions from the 2024 notes. Proposed answers from notes are **not verified** and no private question is used for scored public practice.
 
 Use **Settings → Import private question set** to keep question material you are authorized to use in your own browser. The app never uploads an imported file. A private JSON collection should contain a `questions` array; each question needs at least `id`, `categoryId`, `question`, `options`, `correct`, `source`, and `verification`. Unverified OCR questions with no confirmed answer can be imported into the review queue but are excluded from scored sessions.
