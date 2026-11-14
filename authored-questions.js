@@ -483,6 +483,50 @@ window.OIC_AUTHORED_QUESTIONS = [
       ['Key phrase extraction','Key phrase extraction finds important phrases; it does not provide the requested PII masking controls.','Key phrase extraction','Key phrase extraction identifica frases importantes; no proporciona los controles de enmascaramiento de PII solicitados.'],
       ['PII/PHI detection with configured masking','Oracle documents PII/PHI identification and configurable masking for entities including bank account and telephone number.','Detección de PII/PHI con enmascaramiento configurado','Oracle documenta la identificación de PII/PHI y el enmascaramiento configurable de entidades como cuentas bancarias y teléfonos.']
     ],correct:['D'],reference:'Perform Text Analysis and Translation with a Language Action: PII/PHI',supplementalUrl:'https://docs.oracle.com/en/cloud/paas/application-integration/integrations-user/perform-text-analysis-translation-language-action.html',verification:'verified'
+  },
+  {
+    replaces:'gen-connections-05-01', categoryId:'connections', topic:'Rotating an mTLS identity certificate', type:'application', difficulty:'professional',
+    question:'An outbound integration uses an Identity certificate for two-way SSL. The certificate is expiring and the administrator opens its Update action. What should the runbook say?',
+    questionEs:'Una Integration saliente usa un certificado Identity para SSL bidireccional. Está por vencer y el administrador abre la acción Update. ¿Qué debe indicar el procedimiento?',
+    options:[
+      ['Update the Identity certificate in place by changing only its alias','Oracle states that an Identity certificate cannot be updated in place.','Actualizar Identity en el mismo registro cambiando solo el alias','Oracle indica que un certificado Identity no puede actualizarse en el mismo registro.'],
+      ['Upload the server CA as Trust and assume it replaces client identity','Trust establishes confidence in the remote certificate; it does not replace the client Identity certificate required for two-way SSL.','Subir la CA del servidor como Trust y asumir que reemplaza la identidad del cliente','Trust establece confianza en el certificado remoto; no reemplaza Identity cuando se exige SSL bidireccional.'],
+      ['Plan to delete the old Identity certificate and upload the replacement keystore, then validate the connection','Oracle documents delete-and-reupload for Identity certificates, which use a JKS keystore in the X.509 SSL transport category.','Planear eliminar el certificado Identity anterior y subir el nuevo keystore; después validar la Connection','Oracle documenta eliminar y volver a subir Identity mediante un keystore JKS en la categoría X.509 SSL transport.'],
+      ['Convert the Identity certificate to a PGP public key','PGP file encryption is a different certificate category and does not provide the TLS client identity.','Convertir Identity en una clave pública PGP','El cifrado de archivos PGP es otra categoría y no aporta la identidad TLS del cliente.']
+    ],correct:['C'],reference:'Manage Security Certificates: X.509 Identity and Update or Delete a Certificate',supplementalUrl:'https://docs.oracle.com/en/cloud/paas/application-integration/integrations-user/manage-security-certificates.html',verification:'verified'
+  },
+  {
+    replaces:'gen-orchestration-03-01', categoryId:'orchestration', topic:'Variable visibility outside Scope', type:'application', difficulty:'professional',
+    question:'A string variable is created inside a Scope, but a later action outside that Scope must use its final value. Which documented design addresses the visibility boundary?',
+    questionEs:'Una variable de cadena se crea dentro de un Scope, pero una acción posterior fuera de él debe usar su valor final. ¿Qué diseño documentado resuelve el límite de visibilidad?',
+    options:[
+      ['Reference the local variable directly from outside; Scope never limits visibility','Oracle says local variables created inside a Scope are not directly accessible outside it.','Referenciar directamente la variable local desde fuera; Scope nunca limita la visibilidad','Oracle indica que las variables locales creadas dentro de Scope no son accesibles directamente desde fuera.'],
+      ['Create a global variable with Assign above the Scope and copy the local value into it before leaving','Oracle documents this pattern for exposing a local Scope or loop value to later actions.','Crear una variable global con Assign encima del Scope y copiarle el valor local antes de salir','Oracle documenta este patrón para hacer disponible un valor local de Scope o de un bucle a acciones posteriores.'],
+      ['Replace Assign with a Trust certificate','A certificate manages security material; it has no role in variable scope or value assignment.','Reemplazar Assign por un certificado Trust','Un certificado gestiona material de seguridad; no controla el alcance ni la asignación de variables.'],
+      ['Delete the Scope fault handler so the variable becomes global','Fault-handler configuration does not change lexical visibility of a variable created inside the Scope.','Eliminar el manejador de fallos de Scope para volver global la variable','La configuración del manejador de fallos no cambia la visibilidad de una variable creada dentro del Scope.']
+    ],correct:['B'],reference:'Assign Values to Scalar Variables in an Assign Action: local scope and loop variables',supplementalUrl:'https://docs.oracle.com/en/cloud/paas/application-integration/integrations-user/assign-values-scalar-variables-assign-action.html',verification:'verified'
+  },
+  {
+    replaces:'gen-scheduled-03-01', categoryId:'scheduled', topic:'Persisted schedule cursor', type:'application', difficulty:'professional',
+    question:'A scheduled batch stores its last processed offset in a schedule parameter. At the end of a run, an Assign action updates that parameter. What happens on the next scheduled run?',
+    questionEs:'Un proceso por lotes guarda el último desplazamiento procesado en un schedule parameter. Al final de una ejecución, Assign actualiza el parámetro. ¿Qué ocurre en la siguiente ejecución programada?',
+    options:[
+      ['The parameter always resets to its original design-time default','Oracle says the updated value is saved as the current value for the next run.','El parámetro siempre vuelve al valor predeterminado de diseño','Oracle indica que el valor actualizado se guarda como valor actual para la siguiente ejecución.'],
+      ['The value persists as the current parameter value for the next run','Oracle documents schedule parameters as cross-run state; an Assign update becomes the next run’s current value.','El valor persiste como valor actual del parámetro para la siguiente ejecución','Oracle documenta schedule parameters como estado entre ejecuciones; la actualización con Assign pasa a ser el valor actual siguiente.'],
+      ['The parameter is converted into a Connection password','A schedule parameter used as a batch cursor is not a security credential or Connection property.','El parámetro se convierte en una contraseña de Connection','Un schedule parameter usado como cursor de lote no es una credencial ni una propiedad de Connection.'],
+      ['The integration becomes a synchronous application integration','Updating a parameter does not change the integration style or make it an inbound request-response flow.','La Integration se convierte en una Application Integration síncrona','Actualizar un parámetro no cambia el estilo ni crea un flujo entrante de solicitud-respuesta.']
+    ],correct:['B'],reference:'Create and Update Parameters in Schedule Integrations: Update Parameters',supplementalUrl:'https://docs.oracle.com/en/cloud/paas/application-integration/integrations-user/create-update-parameters-scheduled-integrations.html',verification:'verified'
+  },
+  {
+    replaces:'gen-ai-04-01', categoryId:'ai', topic:'OCI Language detection result', type:'application', difficulty:'professional',
+    question:'An integration receives customer comments in an unknown language and must route them by detected language. Which OCI Language action provides both the detected language and a confidence score?',
+    questionEs:'Una Integration recibe comentarios de clientes en un idioma desconocido y debe enrutarlos según el idioma detectado. ¿Qué acción de OCI Language devuelve el idioma y un nivel de confianza?',
+    options:[
+      ['Text translation','Translation produces text in a target language; the required first decision is to detect the input language with confidence.','Text translation','Translation produce texto en un idioma destino; primero se requiere detectar el idioma de entrada con un nivel de confianza.'],
+      ['Sentiment analysis','Sentiment classifies tone, not the language identity needed for routing.','Sentiment analysis','Sentiment clasifica el tono, no el idioma necesario para enrutar.'],
+      ['Language detection','Oracle documents that Language detection returns the language and its confidence score from zero to one.','Language detection','Oracle documenta que Language detection devuelve el idioma y su puntuación de confianza entre cero y uno.'],
+      ['Named entity recognition','Entity recognition finds names, places, and similar entities; it is not the action that reports detected language.','Named entity recognition','Entity recognition identifica nombres, lugares y entidades similares; no es la acción que informa el idioma detectado.']
+    ],correct:['C'],reference:'Perform Text Analysis and Translation with a Language Action: Language detection',supplementalUrl:'https://docs.oracle.com/en/cloud/paas/application-integration/integrations-user/perform-text-analysis-translation-language-action.html',verification:'verified'
   }
 ].map(item=>({
   id:item.replaces,categoryId:item.categoryId,topic:item.topic,question:item.question,questionEs:item.questionEs,
