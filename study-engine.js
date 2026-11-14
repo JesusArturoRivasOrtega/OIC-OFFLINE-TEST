@@ -28,6 +28,16 @@ window.OIC_ENGINE = (() => {
     const expected=[...question.correct].sort();const actual=[...selected].sort();
     return expected.length===actual.length&&expected.every((id,i)=>id===actual[i]);
   }
+  function normalizeImportedQuestion(question,sourceName='Imported JSON'){
+    if(!question||typeof question.id!=='string'||typeof question.categoryId!=='string'||typeof question.question!=='string'||!Array.isArray(question.options)||!Array.isArray(question.correct))return null;
+    const ids=new Set(question.options.map(option=>option.id));
+    if(question.options.some(option=>!option||typeof option.id!=='string'||typeof option.text!=='string')||ids.size!==question.options.length)return null;
+    const verified=question.verification==='verified'&&question.correct.length>0&&question.correct.every(id=>ids.has(id));
+    const correct=verified?[...new Set(question.correct)]:[];
+    const verification=verified?'verified':question.verification==='verified'?'requires review':question.verification||'requires review';
+    const reference=Array.isArray(question.reference)?{url:question.reference[0]?.url||'',section:question.reference[0]?.section||''}:question.reference;
+    return {...question,source:question.source||sourceName,sourceType:'private-import',verification,reference,correct,multi:correct.length>1,options:question.options.map(option=>({...option,correct:correct.includes(option.id)}))};
+  }
   function examDistribution(questions,random=Math.random,preferred='practice'){
     const counts={started:7,connections:10,orchestration:16,scheduled:5,monitoring:6,ai:6};
     const result=Object.entries(counts).flatMap(([categoryId,n])=>{
@@ -47,5 +57,5 @@ window.OIC_ENGINE = (() => {
     const score=Math.round(correct/rows.length*100);
     return {date:Date.now(),level:session.level,score,correct,total:rows.length,answered:rows.filter(r=>r.answered).length,seconds:Math.round((Date.now()-session.started)/1000),byCategory,missed:rows.filter(r=>!r.correct),previousScore:previous.at(-1)?.score??null};
   }
-  return {grade,selection,score,examDistribution,examReport,createRng,shuffle};
+  return {grade,selection,score,examDistribution,examReport,createRng,shuffle,normalizeImportedQuestion};
 })();
