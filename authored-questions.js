@@ -439,6 +439,50 @@ window.OIC_AUTHORED_QUESTIONS = [
       ['OCI Speech transcription','Speech transcribes audio, while the source here is a PDF table.','Transcripción con OCI Speech','Speech transcribe audio, mientras que la fuente aquí es una tabla en PDF.'],
       ['Table extraction','Oracle documents table extraction for receipts, returning rows, columns, and cell content; the pretrained feature is English-only.','Table extraction','Oracle documenta la extracción de tablas en recibos y devuelve filas, columnas y contenido de celdas; la función preentrenada admite inglés.']
     ],correct:['D'],reference:'Document Understanding: Table Extraction',supplementalUrl:'https://docs.oracle.com/en-us/iaas/Content/document-understanding/using/pretrained_doc_table_extraction.htm',verification:'verified'
+  },
+  {
+    replaces:'gen-started-09-01', categoryId:'started', topic:'System event subscription', type:'expert', difficulty:'expert',
+    question:'A team wants an integration to react to an Oracle Integration system event. Which design constraint applies?',
+    questionEs:'Un equipo quiere que una Integration reaccione a un evento del sistema de Oracle Integration. ¿Qué restricción de diseño se aplica?',
+    options:[
+      ['Create and publish the system event yourself before subscribing','Oracle creates system events; customers subscribe to supported ones rather than creating or publishing them.','Crear y publicar el evento del sistema antes de suscribirse','Oracle crea los eventos del sistema; se permite suscribirse a los admitidos, no crearlos ni publicarlos.'],
+      ['Subscribe within a Project to a supported system event','Oracle documents system-event subscriptions only in Projects; the system supplies the event.','Suscribirse dentro de un Project a un evento del sistema admitido','Oracle documenta las suscripciones a eventos del sistema solo en Projects; el sistema proporciona el evento.'],
+      ['Use a REST Adapter Trigger as the event subscription','An event integration has a Subscribe to event trigger; it does not use an adapter connection as its trigger.','Usar un REST Adapter Trigger como suscripción al evento','Una Event Integration tiene un trigger Subscribe to event; no usa una Connection de adaptador como trigger.'],
+      ['Set a Schedule recurrence; every schedule tick is a system event','A scheduled start is not the documented subscription to a system event.','Definir una recurrencia Schedule; cada ejecución es un evento del sistema','Un inicio programado no equivale a la suscripción documentada a un evento del sistema.']
+    ],correct:['B'],reference:'Subscribe to Events in an Integration: System events',supplementalUrl:'https://docs.oracle.com/en/cloud/paas/application-integration/integrations-user/subscribe-event-integration.html',verification:'verified'
+  },
+  {
+    replaces:'gen-connections-03-01', categoryId:'connections', topic:'Private VCN route', type:'application', difficulty:'professional',
+    question:'An OIC invoke must reach a service in one private OCI VCN subnet without installing a VM on the customer premises. Which documented network route fits?',
+    questionEs:'Un Invoke de OIC debe acceder a un servicio en una subred privada de una VCN de OCI sin instalar una VM en las instalaciones del cliente. ¿Qué ruta de red documentada corresponde?',
+    options:[
+      ['Private endpoint, subject to supported adapter and network setup','Oracle describes a private endpoint for resources in a VCN subnet; adapter support and VCN prerequisites still matter.','Private endpoint, sujeto a la compatibilidad del adaptador y la configuración de red','Oracle describe private endpoint para recursos en una subred VCN; importan la compatibilidad del adaptador y los requisitos de la VCN.'],
+      ['Connectivity agent installed on a customer-premises VM','The agent route is designed for on-premises resources and requires a maintained host; the scenario explicitly avoids that setup.','Connectivity agent instalado en una VM local del cliente','La ruta con agente sirve para recursos locales y requiere mantener una VM; el caso evita expresamente esa instalación.'],
+      ['A Business Identifier containing the subnet address','A tracking identifier cannot establish network connectivity or route adapter traffic.','Un Business Identifier con la dirección de la subred','Un identificador de seguimiento no establece conectividad de red ni enruta el tráfico del adaptador.'],
+      ['An inbound REST Trigger in place of the outbound Invoke','An inbound trigger receives requests; it is not the private outbound route to the target service.','Un REST Trigger entrante en lugar del Invoke saliente','Un trigger entrante recibe solicitudes; no es la ruta privada saliente hacia el servicio destino.']
+    ],correct:['A'],reference:'Private Endpoint vs. Connectivity Agent: Usage and adapter support',supplementalUrl:'https://docs.oracle.com/en-us/iaas/application-integration/doc/private-endpoint-vs-connectivity-agent.html',verification:'verified'
+  },
+  {
+    replaces:'gen-orchestration-08-01', categoryId:'orchestration', topic:'Agent invoke fault handling', type:'scenario', difficulty:'professional',
+    question:'A Scope contains an Invoke that uses a connectivity agent. The designer plans to catch a named fault from that Invoke in the Scope. What does Oracle require?',
+    questionEs:'Un Scope contiene un Invoke que usa connectivity agent. El diseñador planea capturar un fallo con nombre de ese Invoke dentro del Scope. ¿Qué exige Oracle?',
+    options:[
+      ['Use the named fault handler; agent-based Invokes always process it','Oracle specifically says named fault handlers are not processed for connectivity-agent-based Invokes.','Usar el manejador de fallos con nombre; los Invokes con agente siempre lo procesan','Oracle indica expresamente que no se procesan los manejadores con nombre para Invokes basados en connectivity agent.'],
+      ['Remove the Scope because no local fault handling is possible','A Scope still provides a default fault handler; the limitation concerns named handlers for agent-based Invokes.','Eliminar el Scope porque no es posible manejar fallos localmente','Scope conserva un manejador por defecto; la limitación afecta a los manejadores con nombre de Invokes con agente.'],
+      ['Handle the agent-based Invoke fault in the Scope default fault handler','Oracle documents that all fault handling for connectivity-agent-based Invokes must be done in the default handler.','Manejar el fallo del Invoke con agente en el manejador por defecto del Scope','Oracle documenta que todo manejo de fallos de Invokes con connectivity agent debe hacerse en el manejador por defecto.'],
+      ['Convert the named fault into a Business Identifier','Business Identifiers support tracking and do not replace the Scope fault handler.','Convertir el fallo con nombre en Business Identifier','Business Identifiers permiten seguimiento; no reemplazan el manejador de fallos del Scope.']
+    ],correct:['C'],reference:'Manage a Group of Actions and Fault Handlers with a Scope Action: connectivity-agent note',supplementalUrl:'https://docs.oracle.com/en/cloud/paas/application-integration/integrations-user/manage-group-actions-scope-action.html',verification:'verified'
+  },
+  {
+    replaces:'gen-ai-03-01', categoryId:'ai', topic:'OCI Language PII masking', type:'application', difficulty:'professional',
+    question:'A support flow receives free-text notes that may contain phone numbers and bank accounts. It must identify and mask that private data before passing notes downstream. Which OCI Language action fits?',
+    questionEs:'Un flujo de soporte recibe notas de texto libre que pueden contener teléfonos y cuentas bancarias. Debe identificar y enmascarar esos datos privados antes de enviarlas al siguiente sistema. ¿Qué acción de OCI Language corresponde?',
+    options:[
+      ['Sentiment analysis','Sentiment analysis measures positive, negative, neutral, or mixed tone; it does not perform PII masking.','Sentiment analysis','Sentiment analysis evalúa el tono positivo, negativo, neutro o mixto; no enmascara datos personales.'],
+      ['Text translation','Translation changes the language of text; it is not the documented PII detection and masking action.','Text translation','Translation cambia el idioma del texto; no es la acción documentada para detectar y enmascarar PII.'],
+      ['Key phrase extraction','Key phrase extraction finds important phrases; it does not provide the requested PII masking controls.','Key phrase extraction','Key phrase extraction identifica frases importantes; no proporciona los controles de enmascaramiento de PII solicitados.'],
+      ['PII/PHI detection with configured masking','Oracle documents PII/PHI identification and configurable masking for entities including bank account and telephone number.','Detección de PII/PHI con enmascaramiento configurado','Oracle documenta la identificación de PII/PHI y el enmascaramiento configurable de entidades como cuentas bancarias y teléfonos.']
+    ],correct:['D'],reference:'Perform Text Analysis and Translation with a Language Action: PII/PHI',supplementalUrl:'https://docs.oracle.com/en/cloud/paas/application-integration/integrations-user/perform-text-analysis-translation-language-action.html',verification:'verified'
   }
 ].map(item=>({
   id:item.replaces,categoryId:item.categoryId,topic:item.topic,question:item.question,questionEs:item.questionEs,
