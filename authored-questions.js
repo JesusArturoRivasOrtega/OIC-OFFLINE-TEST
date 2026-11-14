@@ -1,6 +1,17 @@
 /* Original editorial replacement items. No text or answer key from private sources is copied here. */
 window.OIC_AUTHORED_QUESTIONS = [
   {
+    replaces:'gen-orchestration-01-03', categoryId:'orchestration', topic:'B2B document version migration', type:'fundamentals', difficulty:'basic',
+    question:'A partner will start sending X12 5010 810 invoices next month, while another partner still sends 4010 810. What should the OIC B2B designer prepare before the new feed goes live?',
+    questionEs:'Un socio comenzará a enviar facturas X12 5010 810 el próximo mes, mientras otro seguirá enviando 4010 810. ¿Qué debe preparar el diseñador de OIC B2B antes de activar el nuevo flujo?',
+    options:[
+      ['One agreement using only the existing 4010 document; X12 versions are ignored','The B2B document includes the EDI version, so the 4010 contract does not automatically validate 5010.','Un solo Agreement con el Document 4010 existente; las versiones X12 se ignoran','El B2B Document incluye la versión EDI; el contrato 4010 no valida automáticamente 5010.'],
+      ['A 5010 810 document and an agreement for the new partner, while retaining the 4010 route until its partner migrates','The document defines version and type; each partner agreement selects the document and route that applies to that partner.','Un Document 5010 810 y un Agreement para el socio nuevo, conservando la ruta 4010 hasta que el otro migre','El Document define versión y tipo; cada Agreement selecciona el documento y la ruta que corresponden a su socio.'],
+      ['Only a new tracking variable that changes 4010 to 5010 at runtime','Tracking variables help locate messages but do not change EDI parsing or agreement configuration.','Solo una Tracking Variable nueva que cambie 4010 por 5010 durante la ejecución','Las Tracking Variables ayudan a localizar mensajes, pero no cambian el análisis EDI ni la configuración del Agreement.'],
+      ['A new FTP password without any B2B document or agreement change','Transport authentication is separate from the version-specific EDI document contract.','Una contraseña FTP nueva sin cambiar Document ni Agreement de B2B','La autenticación del transporte es independiente del contrato EDI específico de cada versión.']
+    ], correct:['B'], referenceTitle:'Using B2B for Oracle Integration 3', referenceEdition:'Current online guide', reference:'Trading Partner Mode Concepts: B2B Documents and Schemas; Agreements', supplementalUrl:'https://docs.oracle.com/en/cloud/paas/application-integration/integration-b2b/trading-partner-mode-concepts.html', verification:'verified'
+  },
+  {
     replaces:'gen-started-06-03', categoryId:'started', topic:'Asynchronous design',
     question:'A storefront sends an order to OIC, but fulfillment may take twenty minutes. The storefront only needs an immediate receipt. Which interaction is most suitable?',
     questionEs:'Una tienda envía un pedido a OIC, pero su preparación puede tardar veinte minutos. La tienda solo necesita un acuse inmediato. ¿Qué interacción conviene?',
@@ -333,7 +344,7 @@ window.OIC_AUTHORED_QUESTIONS = [
 ].map(item=>({
   id:item.replaces,categoryId:item.categoryId,topic:item.topic,question:item.question,questionEs:item.questionEs,
   options:item.options.map(([text,why,textEs,whyEs],i)=>({id:String.fromCharCode(65+i),text,textEs:textEs||null,correct:item.correct.includes(String.fromCharCode(65+i)),why,whyEs:whyEs||null})),
-  correct:item.correct,multi:false,difficulty:/-(09|10)-/.test(item.replaces)?'expert':'professional',type:/-(09|10)-/.test(item.replaces)?'expert':'scenario',
+  correct:item.correct,multi:false,difficulty:item.difficulty||(/-(09|10)-/.test(item.replaces)?'expert':'professional'),type:item.type||(/-(09|10)-/.test(item.replaces)?'expert':'scenario'),
   source:'Original editorial practice',sourceType:'original',verification:item.verification||'editorial draft',
   reference:{title:item.referenceTitle||'Oracle Cloud Using Integrations in Oracle Integration 3',edition:item.referenceEdition||'G36915-54, October 2026',section:item.reference,pdfPage:item.manualPdfPage||null,url:item.manualPdfPage?null:item.supplementalUrl||null,supplementalUrl:item.supplementalUrl||null,status:item.verification==='verified'?'item-level verified':'section pointer; item-level review pending'},
   explanation:item.options.find((_,i)=>item.correct.includes(String.fromCharCode(65+i)))?.[1],
