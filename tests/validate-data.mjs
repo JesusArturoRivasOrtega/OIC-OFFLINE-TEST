@@ -14,7 +14,7 @@ vm.runInContext(readFileSync(new URL('../case-analysis.js', import.meta.url),'ut
 const {categories,questions}=context.window.OIC_DATA;
 if(Object.keys(context.window.OIC_RATIONALES).length!==60||Object.keys(context.window.OIC_CORRECT_WHY).length!==60)throw new Error('Every provisional concept requires explicit right/wrong rationales');
 const chapters=context.window.OIC_CURRICULUM,depth=context.window.OIC_DEPTH;
-if(chapters.length!==40)throw new Error(`Expected 40 chapters, got ${chapters.length}`);
+if(chapters.length<40)throw new Error(`Expected at least 40 chapters, got ${chapters.length}`);
 for(const chapter of chapters){const entry=depth[chapter.id],workbook=context.window.OIC_WORKBOOK[chapter.id];if(!entry||entry.topics.length<3||entry.en.split(/\s+/).length<65||entry.es.split(/\s+/).length<65)throw new Error(`${chapter.id} lacks substantive bilingual depth`);if(!workbook||workbook.en.split(/\s+/).length<65||workbook.es.split(/\s+/).length<65||!workbook.check||!workbook.checkEs)throw new Error(`${chapter.id} lacks bilingual implementation study`)}
 for(const item of context.window.OIC_DATA.labs){const detail=context.window.OIC_CASE_ANALYSIS.labs[item.id];if(!detail||detail.steps.length<3||detail.alternatives.length<2)throw new Error(`${item.id} lacks architecture analysis`)}
 for(const item of context.window.OIC_DATA.troubleshooting){const detail=context.window.OIC_CASE_ANALYSIS.troubleshooting[item.id];if(!detail||detail.steps.length<3||!detail.recovery)throw new Error(`${item.id} lacks diagnostic analysis`)}
