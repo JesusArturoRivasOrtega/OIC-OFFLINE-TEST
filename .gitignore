@@ -1,2 +1,9 @@
 tmp/
 .DS_Store
+
+# Source exams, course notes, and local OCR/review tooling stay off GitHub.
+scripts/
+OIC-academy-private-*.json
+OIC-private-review-2026/
+*.pdf
+*.docx
