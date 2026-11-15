@@ -31,7 +31,7 @@ for(const q of questions.filter(q=>q.source==='Generated practice'))if(!q.refere
 const generated=questions.filter(q=>q.source==='Generated practice'),keyCounts=Object.fromEntries(['A','B','C','D','E'].map(id=>[id,generated.filter(q=>q.correct.includes(id)).length]));
 if(keyCounts.A<35||keyCounts.B<35||keyCounts.C<35||keyCounts.D<35||keyCounts.A>100)throw new Error(`Generated answer positions remain biased: ${JSON.stringify(keyCounts)}`);
 const authored=questions.filter(q=>q.source==='Original editorial practice');
-if(authored.length!==106)throw new Error('Expected 106 authored case replacements');
+if(authored.length!==112)throw new Error('Expected 112 authored case replacements');
 if(authored.some(q=>q.verification!=='verified'||q.reference.status!=='item-level verified'||!q.reference.pdfPage&&!q.reference.url))throw new Error('Every authored answer needs a verified item-level reference');
 if(authored.some(q=>!q.questionEs||q.options.some(o=>!o.textEs||!o.whyEs)))throw new Error('Every authored item needs full Spanish options and rationales');
 if(authored.some(q=>q.correct.some(id=>!q.options.some(o=>o.id===id&&o.correct))||q.options.some(o=>o.correct!==q.correct.includes(o.id))))throw new Error('Authored answer flags and correct IDs disagree');
@@ -42,8 +42,8 @@ for(const q of reviewedBatch){
   if(new Set(q.options.map(o=>o.why)).size!==4||new Set(q.options.map(o=>o.whyEs)).size!==4)throw new Error(`${q.id}: distractor rationales must be individually distinguishable`);
   if(!/^https:\/\//.test(q.reference.url)||q.translationStatus!=='reviewed')throw new Error(`${q.id}: source or translation review missing`);
 }
-const reviewedSix=['gen-started-08-04','gen-connections-10-04','gen-orchestration-10-04','gen-scheduled-10-04','gen-monitoring-10-04','gen-ai-07-04'];
-for(const id of reviewedSix){const q=authored.find(x=>x.id===id);if(!q||q.options.length!==4||q.correct.length!==1||new Set(q.options.map(o=>o.whyEs)).size!==4)throw new Error(`${id}: new case or bilingual rationales missing`)}
+const reviewedTwelve=['gen-started-08-04','gen-connections-10-04','gen-orchestration-10-04','gen-scheduled-10-04','gen-monitoring-10-04','gen-ai-07-04','gen-started-10-04','gen-connections-09-04','gen-orchestration-09-04','gen-scheduled-09-04','gen-monitoring-09-04','gen-ai-10-04'];
+for(const id of reviewedTwelve){const q=authored.find(x=>x.id===id);if(!q||q.options.length!==4||q.correct.length!==1||new Set(q.options.map(o=>o.whyEs)).size!==4)throw new Error(`${id}: new case or bilingual rationales missing`)}
 if(new Set(questions.map(q=>q.question.trim().toLowerCase())).size!==questions.length)throw new Error('Duplicate question stems');
 const distribution={started:7,connections:10,orchestration:16,scheduled:5,monitoring:6,ai:6};if(Object.values(distribution).reduce((a,b)=>a+b,0)!==50)throw new Error('Exam distribution must total 50');
 console.log(`Validated ${questions.length} practice prompts, including ${authored.length} bilingual source-backed case replacements; remaining variants and item references still require editorial review.`);

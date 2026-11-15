@@ -5,7 +5,7 @@ for(const file of ['rationales.js','authored-questions.js','question-translation
 const D=context.window.OIC_DATA,E=context.window.OIC_ENGINE;
 const assert=(condition,message)=>{if(!condition)throw new Error(message)};
 const verifiedPool=E.scoredPool(D.questions);
-assert(verifiedPool.length===106&&verifiedPool.every(q=>q.verification==='verified'),'Scored sessions must exclude every provisional public item');
+assert(verifiedPool.length===112&&verifiedPool.every(q=>q.verification==='verified'),'Scored sessions must exclude every provisional public item');
 const verifiedExam=E.examDistribution(verifiedPool,E.createRng(20261114));
 assert(verifiedExam.length===50&&verifiedExam.every(q=>q.verification==='verified'),'Verified cases must fill the weighted exam');
 const multi=D.questions.find(q=>q.multi);

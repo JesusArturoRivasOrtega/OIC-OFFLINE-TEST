@@ -1,4 +1,4 @@
-/* Six original public cases checked against the linked current product pages. */
+/* Original public cases checked against the linked current product pages. */
 (() => {
   const guide='https://docs.oracle.com/en/cloud/paas/application-integration/integrations-user/';
   const cases=[
@@ -72,6 +72,78 @@
         ['Only rename the integration to include the letters MCP.','Solo agregar las letras MCP al nombre de la Integration.','A name is not tool registration or project MCP enablement.','Un nombre no registra la herramienta ni habilita MCP en el Project.',false],
         ['Add a Stage File action to the integration.','Agregar una acción Stage File a la Integration.','Stage File processes staged content; it does not expose a tool to MCP clients.','Stage File procesa contenido temporal; no expone herramientas a clientes MCP.',false],
         ['Make the integration a Business Identifier.','Convertir la Integration en un Business Identifier.','A tracking identifier cannot register an integration as an agentic tool.','Un identificador de seguimiento no registra la Integration como herramienta de agente.',false]
+      ]
+    },
+    {
+      id:'gen-started-10-04',topic:'REST and SOAP',
+      question:'A client proposes sending a SOAP request with an attachment to an OIC SOAP Adapter trigger. Which documented limitation must the design review flag?',
+      questionEs:'Un cliente propone enviar una solicitud SOAP con un archivo adjunto a un Trigger de SOAP Adapter en OIC. ¿Qué limitación documentada debe señalar la revisión?',
+      url:'https://docs.oracle.com/en/cloud/paas/application-integration/soap-adapter/oracle-soap-adapter-capabilities.html',title:'SOAP Adapter Capabilities — trigger restrictions',
+      options:[
+        ['A SOAP Adapter trigger cannot accept attachments.','Un Trigger de SOAP Adapter no puede aceptar archivos adjuntos.','Oracle explicitly excludes attachments on integrations exposed as SOAP APIs through this trigger.','Oracle excluye expresamente los archivos adjuntos en Integrations expuestas como SOAP mediante este Trigger.',true],
+        ['A SOAP Adapter trigger cannot receive XML.','Un Trigger de SOAP Adapter no puede recibir XML.','The SOAP trigger accepts structured XML payloads subject to service limits.','El Trigger SOAP acepta payloads XML estructurados sujetos a límites del servicio.',false],
+        ['A SOAP Adapter trigger cannot use HTTPS.','Un Trigger de SOAP Adapter no puede usar HTTPS.','Oracle documents HTTPS-based inbound SOAP endpoints.','Oracle documenta endpoints SOAP entrantes basados en HTTPS.',false],
+        ['A SOAP Adapter trigger cannot pass SOAP headers onward.','Un Trigger de SOAP Adapter no puede pasar encabezados SOAP.','The adapter exposes standard and custom SOAP or HTTP headers to later actions.','El Adapter pone encabezados SOAP o HTTP estándar y personalizados a disposición de acciones posteriores.',false]
+      ]
+    },
+    {
+      id:'gen-connections-09-04',topic:'REST Adapter',
+      question:'One inbound REST endpoint must handle GET /orders and POST /orders in a single integration, routing each operation separately. Which documented REST Adapter capability supports this?',
+      questionEs:'Un endpoint REST entrante debe atender GET /orders y POST /orders en una sola Integration, con rutas distintas. ¿Qué capacidad documentada de REST Adapter lo admite?',
+      url:'https://docs.oracle.com/en/cloud/paas/application-integration/rest-adapter/rest-adapter-capabilities.html',title:'REST Adapter Capabilities — multiple operation entry points',
+      options:[
+        ['Multiple operation entry points on one REST Trigger, using resource URI and HTTP verb.','Varios puntos de entrada en un REST Trigger, mediante URI de recurso y verbo HTTP.','Oracle documents multiple resource and verb combinations as branches of one integration.','Oracle documenta varias combinaciones de recurso y verbo como ramas de una Integration.',true],
+        ['One FTP Invoke for each HTTP method.','Un FTP Invoke por cada método HTTP.','FTP transfers files; it does not expose inbound HTTP operations.','FTP transfiere archivos; no expone operaciones HTTP entrantes.',false],
+        ['A Business Identifier that changes the HTTP method.','Un Business Identifier que cambia el método HTTP.','Business Identifiers track values and cannot define REST entry points.','Los Business Identifiers sirven para seguimiento y no definen puntos de entrada REST.',false],
+        ['A Trust Certificate that selects GET or POST.','Un certificado Trust que selecciona GET o POST.','TLS trust does not route requests by HTTP method.','La confianza TLS no enruta solicitudes por método HTTP.',false]
+      ]
+    },
+    {
+      id:'gen-orchestration-09-04',topic:'Stage File',
+      question:'An FTP Adapter has downloaded a supplier file into OIC. The flow now needs to read its rows using a declared file format. Which action processes the staged content?',
+      questionEs:'FTP Adapter descargó un archivo de proveedor en OIC. El flujo debe leer sus filas con un formato de archivo declarado. ¿Qué acción procesa el contenido temporal?',
+      url:guide+'process-files-scheduled-integrations-stage-file-action.html',title:'Process Files in Schedule Integrations with a Stage File Action',
+      options:[
+        ['Stage File Read File.','Stage File Read File.','Stage File can read the downloaded file using its configured format after the FTP Adapter makes it available.','Stage File puede leer el archivo descargado con su formato configurado después de que FTP Adapter lo deja disponible.',true],
+        ['A Business Identifier alone.','Solo un Business Identifier.','A tracking field neither reads nor parses staged file rows.','Un campo de seguimiento no lee ni analiza las filas del archivo.',false],
+        ['An inbound REST Trigger without a request.','Un REST Trigger entrante sin solicitud.','A trigger starts a flow from an inbound call; the file has already been downloaded.','Un Trigger inicia un flujo por una llamada entrante; el archivo ya fue descargado.',false],
+        ['A Trust Certificate in place of file parsing.','Un certificado Trust en vez de analizar el archivo.','A certificate handles transport trust, not the staged file format.','Un certificado atiende la confianza del transporte, no el formato del archivo temporal.',false]
+      ]
+    },
+    {
+      id:'gen-scheduled-09-04',topic:'Nightly processing',
+      question:'A previously working nightly schedule stops running after its creator account is locked. Which documented scheduler dependency should operations inspect?',
+      questionEs:'Un horario nocturno que funcionaba deja de ejecutarse después de bloquear la cuenta de quien lo creó. ¿Qué dependencia documentada debe revisar operaciones?',
+      url:guide+'define-integration-schedule.html',title:'Define the Integration Schedule — schedule creator account',
+      options:[
+        ['The user that created and scheduled the integration must not be locked or deleted.','La cuenta que creó y programó la Integration no debe estar bloqueada ni eliminada.','Oracle documents that a schedule does not run when that user is locked or deleted.','Oracle documenta que el horario no se ejecuta si esa cuenta está bloqueada o eliminada.',true],
+        ['The Map Editor must be reopened every night.','Hay que abrir Map Editor cada noche.','Mappings are design artifacts; an operator does not reopen the mapper to trigger each schedule.','Los mappings son artefactos de diseño; no hay que abrir el editor para cada ejecución.',false],
+        ['The Business Identifier must change daily.','El Business Identifier debe cambiar cada día.','Tracking field values do not replace the scheduler account requirement.','Los valores de seguimiento no sustituyen el requisito de la cuenta programadora.',false],
+        ['The FTP server must rotate its SSH host key nightly.','El servidor FTP debe rotar su clave SSH cada noche.','SSH host-key rotation is unrelated to this documented creator-account dependency.','Rotar la clave SSH no guarda relación con esta dependencia documentada de la cuenta.',false]
+      ]
+    },
+    {
+      id:'gen-monitoring-09-04',topic:'Transformation diagnostics',
+      question:'A Map uses encodeReferenceToBase64 on a staged attachment and fails with “Maximum file size supported is 10 MB.” Which diagnosis matches the documented mapper function limit?',
+      questionEs:'Un Map usa encodeReferenceToBase64 sobre un adjunto temporal y falla con “Maximum file size supported is 10 MB”. ¿Qué diagnóstico coincide con el límite documentado de la función?',
+      url:guide+'map-data.html',title:'Map Data — encodeReferenceToBase64 limit',
+      options:[
+        ['The referenced file exceeds the 10 MB limit of encodeReferenceToBase64.','El archivo referenciado supera el límite de 10 MB de encodeReferenceToBase64.','Oracle documents this exact function limit and error; use a suitable file-processing pattern instead of the conversion.','Oracle documenta ese límite y error exactos; usa un patrón de procesamiento de archivos apropiado en vez de esa conversión.',true],
+        ['The Business Identifier is too short.','El Business Identifier es demasiado corto.','Tracking field length is not the stated file-conversion exception.','La longitud del campo de seguimiento no explica esa excepción de conversión.',false],
+        ['The REST Trigger requires an FTP password.','El REST Trigger requiere una contraseña FTP.','The failure occurs in the mapper function after a file reference exists.','El fallo ocurre en la función del mapper después de que existe la referencia al archivo.',false],
+        ['The Schedule expression lacks BYMINUTE.','A la expresión Schedule le falta BYMINUTE.','Schedule timing cannot raise this named mapper file-size error.','La programación no produce este error concreto de tamaño de archivo en mapper.',false]
+      ]
+    },
+    {
+      id:'gen-ai-10-04',topic:'Feature availability',
+      question:'A team cannot find an AI-assisted mapping feature in its OIC instance. Before treating the missing control as a mapping defect, what should it verify?',
+      questionEs:'Un equipo no encuentra una función de mapeo asistido por AI en su instancia OIC. Antes de tratar la ausencia del control como defecto del Map, ¿qué debe comprobar?',
+      url:'https://docs.oracle.com/en-us/iaas/application-integration/doc/ai-feature-availability.html',title:'AI Feature Availability',
+      options:[
+        ['The feature’s current region and edition availability and AI-assistant configuration.','La disponibilidad actual por región y edición y la configuración de AI Assistant.','Oracle lists region and edition restrictions for AI features; availability must be checked before debugging the mapper.','Oracle enumera restricciones por región y edición; hay que comprobar la disponibilidad antes de depurar el mapper.',true],
+        ['Only whether the source field name is lowercase.','Solo si el campo origen está en minúsculas.','Field naming does not establish whether an AI feature is offered in that service instance.','El nombre del campo no determina si la función AI está disponible en esa instancia.',false],
+        ['Whether a Business Identifier has been renamed to AI.','Si se renombró un Business Identifier como AI.','A tracking field cannot enable or reveal an AI Assistant capability.','Un campo de seguimiento no habilita ni muestra una capacidad de AI Assistant.',false],
+        ['Whether an FTP Adapter has an SSH host key.','Si FTP Adapter tiene una clave de host SSH.','SFTP security is unrelated to AI feature availability in OIC.','La seguridad SFTP no guarda relación con la disponibilidad de la función AI en OIC.',false]
       ]
     }
   ];
