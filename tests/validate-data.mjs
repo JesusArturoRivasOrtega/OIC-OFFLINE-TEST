@@ -10,6 +10,7 @@ vm.runInContext(readFileSync(new URL('../data.js', import.meta.url),'utf8'),cont
 vm.runInContext(readFileSync(new URL('../reviewed-48.js', import.meta.url),'utf8'),context);
 vm.runInContext(readFileSync(new URL('../reviewed-6.js', import.meta.url),'utf8'),context);
 vm.runInContext(readFileSync(new URL('../reviewed-5.js', import.meta.url),'utf8'),context);
+vm.runInContext(readFileSync(new URL('../reviewed-orchestration-5.js', import.meta.url),'utf8'),context);
 vm.runInContext(readFileSync(new URL('../curriculum.js', import.meta.url),'utf8'),context);
 vm.runInContext(readFileSync(new URL('../curriculum-depth.js', import.meta.url),'utf8'),context);
 vm.runInContext(readFileSync(new URL('../curriculum-workbook.js', import.meta.url),'utf8'),context);
@@ -32,7 +33,7 @@ for(const q of questions.filter(q=>q.source==='Generated practice'))if(!q.refere
 const generated=questions.filter(q=>q.source==='Generated practice'),keyCounts=Object.fromEntries(['A','B','C','D','E'].map(id=>[id,generated.filter(q=>q.correct.includes(id)).length]));
 if(keyCounts.A<35||keyCounts.B<35||keyCounts.C<35||keyCounts.D<35||keyCounts.A>100)throw new Error(`Generated answer positions remain biased: ${JSON.stringify(keyCounts)}`);
 const authored=questions.filter(q=>q.source==='Original editorial practice');
-if(authored.length!==117)throw new Error('Expected 117 authored case replacements');
+if(authored.length!==122)throw new Error('Expected 122 authored case replacements');
 if(authored.some(q=>q.verification!=='verified'||q.reference.status!=='item-level verified'||!q.reference.pdfPage&&!q.reference.url))throw new Error('Every authored answer needs a verified item-level reference');
 if(authored.some(q=>!q.questionEs||q.options.some(o=>!o.textEs||!o.whyEs)))throw new Error('Every authored item needs full Spanish options and rationales');
 if(authored.some(q=>q.correct.some(id=>!q.options.some(o=>o.id===id&&o.correct))||q.options.some(o=>o.correct!==q.correct.includes(o.id))))throw new Error('Authored answer flags and correct IDs disagree');
@@ -46,6 +47,7 @@ for(const q of reviewedBatch){
 const reviewedTwelve=['gen-started-08-04','gen-connections-10-04','gen-orchestration-10-04','gen-scheduled-10-04','gen-monitoring-10-04','gen-ai-07-04','gen-started-10-04','gen-connections-09-04','gen-orchestration-09-04','gen-scheduled-09-04','gen-monitoring-09-04','gen-ai-10-04'];
 for(const id of reviewedTwelve){const q=authored.find(x=>x.id===id);if(!q||q.options.length!==4||q.correct.length!==1||new Set(q.options.map(o=>o.whyEs)).size!==4)throw new Error(`${id}: new case or bilingual rationales missing`)}
 for(const id of ['gen-connections-02-03','gen-connections-02-04','gen-connections-03-03','gen-ai-02-01','gen-ai-03-03']){const q=authored.find(x=>x.id===id);if(!q||q.options.length!==4||q.correct.length!==1||new Set(q.options.map(o=>o.why)).size!==4||new Set(q.options.map(o=>o.whyEs)).size!==4||q.translationStatus!=='reviewed'||!/^https:\/\/docs\.oracle\.com\//.test(q.reference.url))throw new Error(`${id}: source, key, translation, or option rationale missing`)}
+for(const id of ['gen-orchestration-02-03','gen-orchestration-03-03','gen-orchestration-04-03','gen-orchestration-05-03','gen-orchestration-07-04']){const q=authored.find(x=>x.id===id);if(!q||q.options.length!==4||q.correct.length!==1||new Set(q.options.map(o=>o.why)).size!==4||new Set(q.options.map(o=>o.whyEs)).size!==4||q.translationStatus!=='reviewed'||!/^https:\/\/docs\.oracle\.com\//.test(q.reference.url))throw new Error(`${id}: orchestration source, key, translation, or option rationale missing`)}
 if(new Set(questions.map(q=>q.question.trim().toLowerCase())).size!==questions.length)throw new Error('Duplicate question stems');
 const distribution={started:7,connections:10,orchestration:16,scheduled:5,monitoring:6,ai:6};if(Object.values(distribution).reduce((a,b)=>a+b,0)!==50)throw new Error('Exam distribution must total 50');
 console.log(`Validated ${questions.length} practice prompts, including ${authored.length} bilingual source-backed case replacements; remaining variants and item references still require editorial review.`);

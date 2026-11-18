@@ -3,7 +3,7 @@ import vm from 'node:vm';
 
 const context={window:{}};
 vm.createContext(context);
-for(const file of ['rationales.js','authored-questions.js','question-translations.js','question-references.js','data.js','reviewed-48.js','reviewed-6.js','reviewed-5.js','curriculum.js','curriculum-depth.js','curriculum-workbook.js','chapter-expansion.js']){
+for(const file of ['rationales.js','authored-questions.js','question-translations.js','question-references.js','data.js','reviewed-48.js','reviewed-6.js','reviewed-5.js','reviewed-orchestration-5.js','curriculum.js','curriculum-depth.js','curriculum-workbook.js','chapter-expansion.js']){
   vm.runInContext(readFileSync(new URL(`../${file}`,import.meta.url),'utf8'),context);
 }
 const {questions}=context.window.OIC_DATA;
