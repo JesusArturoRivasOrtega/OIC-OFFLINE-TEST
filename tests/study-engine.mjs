@@ -1,11 +1,11 @@
 import {readFileSync} from 'node:fs';
 import vm from 'node:vm';
 const context={window:{},Date,Math};vm.createContext(context);
-for(const file of ['rationales.js','authored-questions.js','question-translations.js','question-references.js','data.js','reviewed-48.js','reviewed-6.js','reviewed-5.js','reviewed-orchestration-5.js','reviewed-monitoring-5.js','reviewed-scheduled-5.js','study-engine.js'])vm.runInContext(readFileSync(new URL(`../${file}`,import.meta.url),'utf8'),context);
+for(const file of ['rationales.js','authored-questions.js','question-translations.js','question-references.js','data.js','reviewed-48.js','reviewed-6.js','reviewed-5.js','reviewed-orchestration-5.js','reviewed-monitoring-5.js','reviewed-scheduled-5.js','reviewed-started-5.js','study-engine.js'])vm.runInContext(readFileSync(new URL(`../${file}`,import.meta.url),'utf8'),context);
 const D=context.window.OIC_DATA,E=context.window.OIC_ENGINE;
 const assert=(condition,message)=>{if(!condition)throw new Error(message)};
 const verifiedPool=E.scoredPool(D.questions);
-assert(verifiedPool.length===132&&verifiedPool.every(q=>q.verification==='verified'),'Scored sessions must exclude every provisional public item');
+assert(verifiedPool.length===137&&verifiedPool.every(q=>q.verification==='verified'),'Scored sessions must exclude every provisional public item');
 const verifiedExam=E.examDistribution(verifiedPool,E.createRng(20261114));
 assert(verifiedExam.length===50&&verifiedExam.every(q=>q.verification==='verified'),'Verified cases must fill the weighted exam');
 const multi=D.questions.find(q=>q.multi);

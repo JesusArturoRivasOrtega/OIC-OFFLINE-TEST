@@ -13,6 +13,7 @@ vm.runInContext(readFileSync(new URL('../reviewed-5.js', import.meta.url),'utf8'
 vm.runInContext(readFileSync(new URL('../reviewed-orchestration-5.js', import.meta.url),'utf8'),context);
 vm.runInContext(readFileSync(new URL('../reviewed-monitoring-5.js', import.meta.url),'utf8'),context);
 vm.runInContext(readFileSync(new URL('../reviewed-scheduled-5.js', import.meta.url),'utf8'),context);
+vm.runInContext(readFileSync(new URL('../reviewed-started-5.js', import.meta.url),'utf8'),context);
 vm.runInContext(readFileSync(new URL('../curriculum.js', import.meta.url),'utf8'),context);
 vm.runInContext(readFileSync(new URL('../curriculum-depth.js', import.meta.url),'utf8'),context);
 vm.runInContext(readFileSync(new URL('../curriculum-workbook.js', import.meta.url),'utf8'),context);
@@ -33,13 +34,13 @@ for(const q of questions)if(q.options.some(option=>option.correct!==q.correct.in
 for(const q of questions)if(q.options.some(option=>!option.textEs||!option.whyEs))throw new Error(`${q.id} is missing a Spanish option or rationale`);
 for(const q of questions.filter(q=>q.source==='Generated practice'))if(!q.reference.url||q.reference.status==='item-level verified')throw new Error(`${q.id} reference status is inconsistent`);
 const generated=questions.filter(q=>q.source==='Generated practice'),keyCounts=Object.fromEntries(['A','B','C','D','E'].map(id=>[id,generated.filter(q=>q.correct.includes(id)).length]));
-if(keyCounts.A<35||keyCounts.B<35||keyCounts.C<35||keyCounts.D<35||keyCounts.A>100)throw new Error(`Generated answer positions remain biased: ${JSON.stringify(keyCounts)}`);
+for(const id of ['A','B','C','D'])if(keyCounts[id]<generated.length*0.18||keyCounts[id]>generated.length*0.38)throw new Error(`Generated answer positions remain biased: ${JSON.stringify(keyCounts)}`);
 const authored=questions.filter(q=>q.source==='Original editorial practice');
-if(authored.length!==132)throw new Error('Expected 132 authored case replacements');
+if(authored.length!==137)throw new Error('Expected 137 authored case replacements');
 if(authored.some(q=>q.verification!=='verified'||q.reference.status!=='item-level verified'||!q.reference.pdfPage&&!q.reference.url))throw new Error('Every authored answer needs a verified item-level reference');
 if(authored.some(q=>!q.questionEs||q.options.some(o=>!o.textEs||!o.whyEs)))throw new Error('Every authored item needs full Spanish options and rationales');
 if(authored.some(q=>q.correct.some(id=>!q.options.some(o=>o.id===id&&o.correct))||q.options.some(o=>o.correct!==q.correct.includes(o.id))))throw new Error('Authored answer flags and correct IDs disagree');
-const reviewedBatch=authored.filter(q=>q.id.endsWith('-02'));
+const reviewedBatch=authored.filter(q=>q.id.endsWith('-02')&&q.id!=='gen-started-08-02');
 if(reviewedBatch.length!==48)throw new Error(`Expected exactly 48 new reviewed cases, got ${reviewedBatch.length}`);
 for(const q of reviewedBatch){
   if(q.options.length!==4||q.correct.length!==1||new Set(q.options.map(o=>o.text)).size!==4)throw new Error(`${q.id}: options are not four distinct single-answer choices`);
@@ -52,6 +53,7 @@ for(const id of ['gen-connections-02-03','gen-connections-02-04','gen-connection
 for(const id of ['gen-orchestration-02-03','gen-orchestration-03-03','gen-orchestration-04-03','gen-orchestration-05-03','gen-orchestration-07-04']){const q=authored.find(x=>x.id===id);if(!q||q.options.length!==4||q.correct.length!==1||new Set(q.options.map(o=>o.why)).size!==4||new Set(q.options.map(o=>o.whyEs)).size!==4||q.translationStatus!=='reviewed'||!/^https:\/\/docs\.oracle\.com\//.test(q.reference.url))throw new Error(`${id}: orchestration source, key, translation, or option rationale missing`)}
 for(const id of ['gen-monitoring-02-01','gen-monitoring-02-03','gen-monitoring-09-05','gen-monitoring-10-01','gen-monitoring-07-01']){const q=authored.find(x=>x.id===id);if(!q||q.options.length!==4||q.correct.length!==1||new Set(q.options.map(o=>o.why)).size!==4||new Set(q.options.map(o=>o.whyEs)).size!==4||q.translationStatus!=='reviewed'||!/^https:\/\/docs\.oracle\.com\//.test(q.reference.url))throw new Error(`${id}: observability source, key, translation, or option rationale missing`)}
 for(const id of ['gen-scheduled-02-01','gen-scheduled-02-03','gen-scheduled-03-03','gen-scheduled-04-03','gen-scheduled-08-04']){const q=authored.find(x=>x.id===id);if(!q||q.options.length!==4||q.correct.length!==1||new Set(q.options.map(o=>o.why)).size!==4||new Set(q.options.map(o=>o.whyEs)).size!==4||q.translationStatus!=='reviewed'||!/^https:\/\/docs\.oracle\.com\//.test(q.reference.url))throw new Error(`${id}: schedule source, key, translation, or option rationale missing`)}
+for(const id of ['gen-started-01-03','gen-started-07-04','gen-started-08-02','gen-started-08-05','gen-started-10-05']){const q=authored.find(x=>x.id===id);if(!q||q.options.length!==4||q.correct.length!==1||new Set(q.options.map(o=>o.why)).size!==4||new Set(q.options.map(o=>o.whyEs)).size!==4||q.translationStatus!=='reviewed'||!/^https:\/\/docs\.oracle\.com\//.test(q.reference.url))throw new Error(`${id}: lifecycle source, key, translation, or option rationale missing`)}
 if(new Set(questions.map(q=>q.question.trim().toLowerCase())).size!==questions.length)throw new Error('Duplicate question stems');
 const distribution={started:7,connections:10,orchestration:16,scheduled:5,monitoring:6,ai:6};if(Object.values(distribution).reduce((a,b)=>a+b,0)!==50)throw new Error('Exam distribution must total 50');
 console.log(`Validated ${questions.length} practice prompts, including ${authored.length} bilingual source-backed case replacements; remaining variants and item references still require editorial review.`);
