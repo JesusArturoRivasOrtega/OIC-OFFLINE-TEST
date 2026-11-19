@@ -5,17 +5,17 @@ An offline-first, static Progressive Web App for studying Oracle Integration 3 c
 ## What is included
 
 - Six exam categories with the supplied 14/20/32/10/12/12 weighting.
-- 300 practice prompts: 137 are original, bilingual, scenario-specific editorial replacements with item-level answer and reference checks; 163 still use variations of 60 concept records. Exactly 50 appear per category, split 10 fundamentals, 15 application, 15 scenario, and 10 expert. These are **not 300 individually reviewed questions** or official Oracle exam questions.
+- 300 practice prompts: 142 are original, bilingual, scenario-specific editorial replacements with item-level answer and reference checks; 158 still use variations of 60 concept records. Exactly 50 appear per category, split 10 fundamentals, 15 application, 15 scenario, and 10 expert. These are **not 300 individually reviewed questions** or official Oracle exam questions.
 - 40 bilingual grouped chapters with distinct technical walkthroughs and source-section references, completion and resume tracking, text highlighting, fragment notes, and personal flashcards. They still require deeper coverage and objective-by-objective editorial review.
 - Eleven guided OIC labs prepared for validation in a real tenancy; expanded architecture and troubleshooting cases, glossary, and flashcards. The labs have **not** been executed in an OIC instance.
 - Quick 10-question rounds with difficulty and review filters, a configurable-timer 50-question simulator with autosave/resume and category reporting, spaced-review scheduling, and a local dashboard.
 - IndexedDB-backed progress with a browser-storage fallback, JSON backup/restore, and local-only question-set import.
 - A manifest and service worker for offline use after the first successful load.
-- Immediate practice feedback explains both the accepted answer and why each distractor is wrong; assessment and exam sessions show the same detail after submission. The 137 original replacements include Spanish options and rationales. Unreviewed answers and references remain provisional until item-level editorial review.
+- Immediate practice feedback explains both the accepted answer and why each distractor is wrong; assessment and exam sessions show the same detail after submission. The 142 original replacements include Spanish options and rationales. Unreviewed answers and references remain provisional until item-level editorial review.
 
 ## Copyright and source handling
 
-The repository deliberately excludes the supplied Udemy PDFs, 2024 notes, Oracle documentation, and all OCR output. The public bank has 137 original bilingual scenarios with item-level answer, option-rationale, and reference checks; the remaining 163 are provisional concept variations and are not individually verified questions. The questions do not reproduce Oracle documentation or represent an official Oracle certification question bank.
+The repository deliberately excludes the supplied Udemy PDFs, 2024 notes, Oracle documentation, and all OCR output. The public bank has 142 original bilingual scenarios with item-level answer, option-rationale, and reference checks; the remaining 158 are provisional concept variations and are not individually verified questions. The questions do not reproduce Oracle documentation or represent an official Oracle certification question bank.
 
 Scored practice, Quick Challenge, Weakness Trainer, and mock exams now draw only from verified cases. Provisional records stay visible in the Source Verification Center but do not affect scores or current mastery metrics. Existing local answer history is retained; entries for still-provisional cases are omitted from current metrics.
 
