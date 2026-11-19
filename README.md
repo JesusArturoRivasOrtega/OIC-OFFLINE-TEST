@@ -19,7 +19,7 @@ The repository deliberately excludes the supplied Udemy PDFs, 2024 notes, Oracle
 
 Scored practice, Quick Challenge, Weakness Trainer, and mock exams now draw only from verified cases. Provisional records stay visible in the Source Verification Center but do not affect scores or current mastery metrics. Existing local answer history is retained; entries for still-provisional cases are omitted from current metrics.
 
-The Integration lifecycle, Scheduled parameters, Connectivity Agent/Private Endpoint, and AI Assistant readings now include four additional bilingual, source-linked sections each. These expansions do not yet constitute a completed point-by-point editorial audit of all 41 chapters.
+The Integration lifecycle, Scheduled parameters, Connectivity Agent/Private Endpoint, Mapper/XSLT, and AI Assistant readings now include four additional bilingual, source-linked sections each. These expansions do not yet constitute a completed point-by-point editorial audit of all 41 chapters.
 
 Private extracts are kept outside the repository: 272 OCR candidate questions from the supplied PDFs and 66 candidate study questions from the 2024 notes. Proposed answers from notes are **not verified** and no private question is used for scored public practice.
 

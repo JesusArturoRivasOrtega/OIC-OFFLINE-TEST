@@ -78,6 +78,32 @@ window.OIC_CHAPTER_EXPANSIONS = {
       source:'https://docs.oracle.com/en/cloud/paas/application-integration/integrations-user/connecting-endpoints-using-private-virtual-cloud-network-vcn_.html'
     }
   ],
+  'orchestration-2': [
+    {
+      title:'Map repeated records without losing cardinality',
+      en:'A repeatable source element cannot simply be connected to a nonrepeatable target and assumed to preserve every record. Oracle Mapper creates a for-each automatically when appropriate repeatable child elements in the source and target are mapped. Inspect the maxOccurs rules of both schemas before building the map. If the business requirement is to transfer every line, make sure the target permits multiple lines and test with at least two. If the requirement is one summary, define an explicit aggregation or selection rule. A successful test with only one input record says little about how a batch will behave. Review the generated iteration and its context before activation.',
+      es:'Un elemento repetible de origen no se conecta sin más a un destino no repetible suponiendo que conservará todos los registros. Oracle Mapper crea automáticamente un for-each cuando se mapean elementos hijos repetibles apropiados en origen y destino. Inspecciona las reglas maxOccurs de ambos esquemas antes de construir el mapa. Si necesitas transferir cada línea, confirma que el destino admita varias y prueba con al menos dos. Si quieres un resumen, define una regla explícita de agregación o selección. Una prueba exitosa con un solo registro dice poco sobre el comportamiento de un lote. Revisa la iteración generada y su contexto antes de activar.',
+      source:'https://docs.oracle.com/en/cloud/paas/application-integration/mapper-user/creating-each-action.html'
+    },
+    {
+      title:'Treat XSLT code mode as a controlled change',
+      en:'Oracle allows direct editing of the XSLT when the visual Mapper cannot express a desired transformation. That does not make the source view equivalent to the visual editor. A syntax error must be corrected before the designer or test view can be reopened, and some XSLT constructs are not represented by the visual canvas. Before changing code, preserve a representative input and expected output. Afterward, inspect namespace bindings, target paths, predicates, and loop context. Test optional and repeated nodes, not only the simplest payload. A stylesheet that compiles may still select the wrong node or emit the right value in the wrong place. Keep the change reviewable.',
+      es:'Oracle permite editar directamente el XSLT cuando el Mapper visual no expresa la transformación deseada. Eso no convierte la vista de código en equivalente al editor gráfico. Un error de sintaxis debe corregirse antes de regresar al diseñador o a pruebas, y algunas construcciones XSLT no aparecen en el canvas. Antes de cambiar el código, conserva una entrada representativa y la salida esperada. Después revisa espacios de nombres, rutas destino, predicados y contexto de bucles. Prueba nodos opcionales y repetibles, no solo el payload más sencillo. Una hoja que compila todavía puede elegir un nodo equivocado o emitir el valor correcto en un lugar incorrecto. Mantén el cambio revisable.',
+      source:'https://docs.oracle.com/en/cloud/paas/application-integration/mapper-user/edit-xslt-code-mapper.html'
+    },
+    {
+      title:'Locate and resolve validation errors',
+      en:'Run Mapper validation after changing a schema, a function, or a target path. Oracle distinguishes errors from warnings and offers filters to locate them. A regenerated WSDL may remove or rename a target node, leaving a previously valid link broken. A function can also be missing a required parameter. Open the reported mapping location and compare the expression against the current source and target schemas. Fix the affected node, then revalidate. Do not assume that dismissing a visible warning establishes a correct output. Record whether the change followed a schema migration or a revised business rule, so another reviewer can reproduce why the mapping changed and what should be retested.',
+      es:'Valida el Mapper después de cambiar un esquema, una función o una ruta destino. Oracle distingue errores de advertencias y ofrece filtros para ubicarlos. Al regenerar un WSDL puede desaparecer o cambiar de nombre un nodo destino, rompiendo un vínculo antes válido. También puede faltar un parámetro obligatorio de una función. Abre la ubicación indicada y compara la expresión con los esquemas actuales de origen y destino. Corrige el nodo afectado y vuelve a validar. No supongas que eliminar un aviso visible establece una salida correcta. Registra si el cambio provino de migrar un esquema o de modificar una regla empresarial para que otro revisor sepa qué volver a probar.',
+      source:'https://docs.oracle.com/en/cloud/paas/application-integration/mapper-user/resolving-errors.html'
+    },
+    {
+      title:'Exercise mapping tests with meaningful samples',
+      en:'Oracle Mapper Test can generate sample input or accept supplied input, execute the map, and display the target result. Generated data is useful for a first smoke test, not for proving a business rule. Supply samples covering missing optional values, repeated records, boundary values, and malformed values where applicable. Compare each result with an independently written expected document, and save the input and observed output when a regression is found. Oracle notes that custom JavaScript functions cannot be tested in this Mapper test facility; test those in the integration instead. A passing mapper test also does not prove that connections, target authorization, or downstream actions work in a live instance.',
+      es:'Mapper Test de Oracle puede generar una entrada o aceptar una muestra propia, ejecutar el mapa y mostrar el resultado destino. Los datos generados sirven para una prueba inicial, no para demostrar una regla empresarial. Aporta muestras con valores opcionales ausentes, registros repetidos, valores límite y valores mal formados cuando corresponda. Compara cada resultado con un documento esperado redactado de forma independiente y conserva entrada y salida observada si encuentras una regresión. Oracle indica que las funciones JavaScript personalizadas no se prueban en esta herramienta; pruébalas dentro de la Integration. Que el Mapper pase tampoco demuestra que funcionen las conexiones, la autorización del destino o las acciones posteriores en una instancia real.',
+      source:'https://docs.oracle.com/en/cloud/paas/application-integration/mapper-user/testing-your-mappings.html'
+    }
+  ],
   'ai-1': [
     {
       title:'Generate a design, then inspect it',
@@ -109,6 +135,7 @@ for (const [id, section, url] of [
   ['started-5','Activate an Integration','https://docs.oracle.com/en/cloud/paas/application-integration/integrations-user/activate-integration.html'],
   ['scheduled-3','Create and Update Parameters in Schedule Integrations','https://docs.oracle.com/en/cloud/paas/application-integration/integrations-user/create-update-parameters-scheduled-integrations.html'],
   ['connections-5','About the Connectivity Agent','https://docs.oracle.com/en/cloud/paas/application-integration/integrations-user/connectivity-agent.html'],
+  ['orchestration-2','Automatically Create for-each Statements','https://docs.oracle.com/en/cloud/paas/application-integration/mapper-user/creating-each-action.html'],
   ['ai-1','Fast Track Automation with AI Assistant','https://docs.oracle.com/en/cloud/paas/application-integration/integrations-user/fast-track-automation-ai-assistant.html']
 ]) {
   const chapter=window.OIC_CURRICULUM.find(item=>item.id===id);
