@@ -104,6 +104,32 @@ window.OIC_CHAPTER_EXPANSIONS = {
       source:'https://docs.oracle.com/en/cloud/paas/application-integration/mapper-user/testing-your-mappings.html'
     }
   ],
+  'monitoring-2': [
+    {
+      title:'Find the instance that belongs to the incident',
+      en:'The Instances page can filter and track executions through business identifiers, but these fields must be assigned during integration design. Oracle requires at least one business identifier. Choose a value that an operator can relate to an external request, such as an order or correlation ID, and distinguish it from the technical instance ID. When an incident arrives, narrow the time window and search for the identifier before interpreting a status. Record both IDs, the integration version, and the external request time. A green instance found nearby does not prove that the affected order succeeded; compare the identifier and the target-side transaction before drawing that conclusion.',
+      es:'La página Instances permite filtrar y seguir ejecuciones mediante Business Identifiers, pero esos campos se asignan durante el diseño de la Integration. Oracle exige al menos un identificador. Escoge un valor que soporte pueda relacionar con una solicitud externa, como un pedido o ID de correlación, y distínguelo del ID técnico de la instancia. Ante un incidente, acota el intervalo y busca el identificador antes de interpretar el estado. Registra ambos IDs, la versión de la Integration y la hora de la solicitud. Una instancia exitosa cercana no demuestra que ese pedido se procesara; compara el identificador y la transacción del destino.',
+      source:'https://docs.oracle.com/en/cloud/paas/application-integration/integrations-user/track-integration-instances.html'
+    },
+    {
+      title:'Follow the Activity Stream in execution order',
+      en:'Open View Details for the relevant instance and read the Activity Stream as a sequence of actions and timestamps. Oracle shows message movement through the integration and where failures occurred; loop iterations can be expanded for more detail. Identify the last completed action and first reported fault, then compare the configured Invoke, mapping, and fault handler with the recorded error. A failed Invoke alone does not prove whether the root cause is credentials, network reachability, an invalid payload, or a target application rejection. Download the logs when an incident needs a durable record. If a child integration was invoked, inspect its separate stream rather than treating the parent summary as the whole execution.',
+      es:'Abre View Details de la instancia correspondiente y lee Activity Stream como una secuencia de acciones y horas. Oracle muestra el recorrido del mensaje y dónde hubo fallos; las iteraciones de un bucle se pueden ampliar. Identifica la última acción completada y el primer error comunicado; compara después el Invoke, el mapping y el manejador de fallos configurados con el detalle registrado. Un Invoke fallido no demuestra por sí solo si la causa son credenciales, conectividad, payload inválido o rechazo de la aplicación destino. Descarga los logs si necesitas evidencia duradera. Si se invocó una Integration hija, inspecciona su stream propio en vez de considerar completo el resumen del padre.',
+      source:'https://docs.oracle.com/en/cloud/paas/application-integration/integrations-user/track-status-integration-instances.html'
+    },
+    {
+      title:'Interpret payload visibility and audit limits',
+      en:'An absent inline payload does not prove that no message was processed. Oracle limits inline viewing to specified MIME types and payloads smaller than 32 KB; other types or larger payloads can require a download. Binary data, such as a zip file, is not displayed inline even when there is a download option. Attachments are not considered part of the displayed payload and are not visible in the Activity Stream; adapters store and later delete them after processing. Follow your data-handling policy before exporting a whole stream or pasting examples into tickets. Redact credentials and personal data, and use identifiers, schemas, and error codes when full content is unavailable. Check that the downloaded evidence belongs to the intended instance.',
+      es:'Que no se vea un payload en línea no demuestra que no se procesara un mensaje. Oracle limita esa vista a ciertos tipos MIME y a contenido menor de 32 KB; otros tipos o tamaños pueden requerir descarga. Los datos binarios, como un archivo zip, tampoco se muestran en línea aunque se puedan descargar. Los attachments no forman parte del payload mostrado ni son visibles en Activity Stream; los adapters los almacenan y eliminan después del procesamiento. Respeta las reglas de tratamiento de datos antes de exportar un stream completo o pegar ejemplos en incidencias. Oculta credenciales y datos personales; si no puedes ver el contenido, utiliza identificadores, esquemas y códigos de error. Comprueba que la evidencia descargada corresponde a la instancia investigada.',
+      source:'https://docs.oracle.com/en/cloud/paas/application-integration/integrations-user/understand-supported-activity-stream-payloads.html'
+    },
+    {
+      title:'Diagnose slow runs with duration evidence',
+      en:'A slow successful instance is not the same incident as a failed one. Oracle provides View slowest activities, showing up to the ten longest activities and their share of total duration. Some actions have no meaningful start and end pair, and tracing level can affect whether duration data exists for an action. Therefore, missing duration is not evidence of zero time spent. Compare repeated instance measurements with target-system latency and network observations before changing timeouts or concurrency. For loops, inspect both total loop duration and the slowest iterations where available. Save the instance ID, total duration, trace level, and the observed slow actions so a later release can be compared with the same diagnostic baseline.',
+      es:'Una instancia lenta pero exitosa no es el mismo incidente que una fallida. Oracle ofrece View slowest activities, con hasta diez acciones de mayor duración y su proporción del tiempo total. Algunas acciones no tienen inicio y fin comparables, y el nivel de tracing puede determinar si se dispone de una duración. Por ello, que falte la cifra no equivale a tiempo cero. Compara mediciones repetidas con latencia del sistema destino y observaciones de red antes de cambiar timeouts o concurrencia. En bucles, revisa el tiempo total y las iteraciones más lentas cuando estén disponibles. Conserva ID, duración total, nivel de tracing y acciones lentas para comparar una versión futura con la misma base diagnóstica.',
+      source:'https://docs.oracle.com/en/cloud/paas/application-integration/integrations-user/track-status-integration-instances.html'
+    }
+  ],
   'ai-1': [
     {
       title:'Generate a design, then inspect it',
@@ -136,6 +162,7 @@ for (const [id, section, url] of [
   ['scheduled-3','Create and Update Parameters in Schedule Integrations','https://docs.oracle.com/en/cloud/paas/application-integration/integrations-user/create-update-parameters-scheduled-integrations.html'],
   ['connections-5','About the Connectivity Agent','https://docs.oracle.com/en/cloud/paas/application-integration/integrations-user/connectivity-agent.html'],
   ['orchestration-2','Automatically Create for-each Statements','https://docs.oracle.com/en/cloud/paas/application-integration/mapper-user/creating-each-action.html'],
+  ['monitoring-2','Track the Status of Integration Instances','https://docs.oracle.com/en/cloud/paas/application-integration/integrations-user/track-status-integration-instances.html'],
   ['ai-1','Fast Track Automation with AI Assistant','https://docs.oracle.com/en/cloud/paas/application-integration/integrations-user/fast-track-automation-ai-assistant.html']
 ]) {
   const chapter=window.OIC_CURRICULUM.find(item=>item.id===id);
