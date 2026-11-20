@@ -20,6 +20,7 @@ vm.runInContext(readFileSync(new URL('../reviewed-schedule-operations-5.js', imp
 vm.runInContext(readFileSync(new URL('../reviewed-started-5.js', import.meta.url),'utf8'),context);
 vm.runInContext(readFileSync(new URL('../reviewed-started-basics-5.js', import.meta.url),'utf8'),context);
 vm.runInContext(readFileSync(new URL('../reviewed-connections-5.js', import.meta.url),'utf8'),context);
+vm.runInContext(readFileSync(new URL('../reviewed-connection-security-5.js', import.meta.url),'utf8'),context);
 vm.runInContext(readFileSync(new URL('../curriculum.js', import.meta.url),'utf8'),context);
 vm.runInContext(readFileSync(new URL('../curriculum-depth.js', import.meta.url),'utf8'),context);
 vm.runInContext(readFileSync(new URL('../curriculum-workbook.js', import.meta.url),'utf8'),context);
@@ -42,7 +43,7 @@ for(const q of questions.filter(q=>q.source==='Generated practice'))if(!q.refere
 const generated=questions.filter(q=>q.source==='Generated practice'),keyCounts=Object.fromEntries(['A','B','C','D','E'].map(id=>[id,generated.filter(q=>q.correct.includes(id)).length]));
 for(const id of ['A','B','C','D'])if(keyCounts[id]<generated.length*0.18||keyCounts[id]>generated.length*0.38)throw new Error(`Generated answer positions remain biased: ${JSON.stringify(keyCounts)}`);
 const authored=questions.filter(q=>q.source==='Original editorial practice');
-if(authored.length!==162)throw new Error('Expected 162 authored case replacements');
+if(authored.length!==167)throw new Error('Expected 167 authored case replacements');
 if(authored.some(q=>q.verification!=='verified'||q.reference.status!=='item-level verified'||!q.reference.pdfPage&&!q.reference.url))throw new Error('Every authored answer needs a verified item-level reference');
 if(authored.some(q=>!q.questionEs||q.options.some(o=>!o.textEs||!o.whyEs)))throw new Error('Every authored item needs full Spanish options and rationales');
 if(authored.some(q=>q.correct.some(id=>!q.options.some(o=>o.id===id&&o.correct))||q.options.some(o=>o.correct!==q.correct.includes(o.id))))throw new Error('Authored answer flags and correct IDs disagree');
